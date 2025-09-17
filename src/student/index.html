@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>student</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaathShala - Student Dashboard</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="student.css">
 </head>
 <body>
-    student
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="../../assets/img/PaathShala.jpg" alt="PaathShala" class="logo">
+        <a href="../../index.html" class="logo-text">PaathShala</a>
+      </div>
+      <div class="nav-right">
+        <div class="language-selector">
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="or">ଓଡ଼ିଆ</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="student-dashboard container">
+    <h1>Select Your Class</h1>
+    <div id="classList" class="class-grid">
+      <!-- Classes 6–12 -->
+      <button class="class-card" data-class="6">Class 6</button>
+      <button class="class-card" data-class="7">Class 7</button>
+      <button class="class-card" data-class="8">Class 8</button>
+      <button class="class-card" data-class="9">Class 9</button>
+      <button class="class-card" data-class="10">Class 10</button>
+      <button class="class-card" data-class="11">Class 11</button>
+      <button class="class-card" data-class="12">Class 12</button>
+    </div>
+
+    <!-- Subject Section -->
+    <section id="subjectSection" class="subject-section hidden">
+      <h2 id="subjectTitle">Select Your Subject</h2>
+      <div id="subjectList" class="subject-grid"></div>
+    </section>
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="student.js"></script>
 </body>
 </html>
