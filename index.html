@@ -3,9 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Education</title>
+    <title>EduPlay - Learning that Rewards</title>
+    <link rel="stylesheet" href="src/styles/style.css">
 </head>
 <body>
-    Gamified Learning Platform for Rural Education
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/img/eduplay.png" alt="EduPlay" class="logo">
+                <span class="logo-text">EduPlay</span>
+            </div>
+            <div class="nav-right">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="or">ଓଡ଼ିଆ</option>
+                        <option value="bn">বাংলা</option>
+                    </select>
+                </div>
+                <button class="login-btn" onclick="scrollToLogin()">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="hero.title">Learning that Rewards — for Every Child, Anywhere.</h1>
+                <p class="hero-subtitle" data-translate="hero.subtitle">A lightweight, multilingual gamified platform for grades 6–12 that works offline on low-cost devices.</p>
+                <div class="hero-buttons">
+                    <button class="cta-btn primary" onclick="scrollToLogin('student')" data-translate="hero.start_learning">Start Learning</button>
+                    <button class="cta-btn secondary" onclick="scrollToLogin('teacher')" data-translate="hero.teacher_dashboard">Teacher Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" data-translate="features.title">Why EduPlay?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3 data-translate="features.games.title">Interactive Games</h3>
+                    <p data-translate="features.games.desc">STEM lessons through engaging quizzes and activities that make learning fun and memorable.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📶</div>
+                    <h3 data-translate="features.offline.title">Offline Access</h3>
+                    <p data-translate="features.offline.desc">Works even with low or no internet connection. Progress syncs automatically when back online.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 data-translate="features.multilingual.title">Multilingual</h3>
+                    <p data-translate="features.multilingual.desc">Content available in local languages for better understanding and accessibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 data-translate="features.analytics.title">Teacher Analytics</h3>
+                    <p data-translate="features.analytics.desc">Track student progress, assign tasks, and get detailed insights into learning patterns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamification Preview -->
+    <section class="gamification">
+        <div class="container">
+            <h2 class="section-title" data-translate="gamification.title">Gamified Learning</h2>
+            <p class="section-subtitle" data-translate="gamification.desc">Students earn points, badges, and leaderboard rankings while mastering concepts.</p>
+            
+            <div class="gamification-content">
+                <div class="badges-showcase">
+                    <h3 data-translate="gamification.badges">Sample Badges</h3>
+                    <div class="badges-grid">
+                        <div class="badge">
+                            <div class="badge-icon">🌟</div>
+                            <span>STEM Star</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">💡</div>
+                            <span>Curious Coder</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">🏆</div>
+                            <span>Quiz Master</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">🔬</div>
+                            <span>Science Explorer</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-preview">
+                    <h3 data-translate="gamification.leaderboard">Leaderboard</h3>
+                    <div class="leaderboard">
+                        <div class="leader-item">
+                            <span class="rank">1</span>
+                            <span class="name">Priya S.</span>
+                            <span class="points">2,450 pts</span>
+                        </div>
+                        <div class="leader-item">
+                            <span class="rank">2</span>
+                            <span class="name">Arjun M.</span>
+                            <span class="points">2,340 pts</span>
+                        </div>
+                        <div class="leader-item">
+                            <span class="rank">3</span>
+                            <span class="name">Sneha K.</span>
+                            <span class="points">2,280 pts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section class="login-section" id="loginSection">
+        <div class="container">
+            <h2 class="section-title" data-translate="login.title">Login</h2>
+            
+            <!-- Offline Status -->
+            <div class="offline-status" id="offlineStatus" style="display: none;">
+                <div class="offline-message">
+                    <span class="offline-icon">📶</span>
+                    <span data-translate="login.offline">You are offline. Progress will sync when back online.</span>
+                </div>
+            </div>
+            
+            <!-- Role Switcher -->
+            <div class="role-switcher">
+                <button class="role-btn active" data-role="student" data-translate="login.student">Student</button>
+                <button class="role-btn" data-role="teacher" data-translate="login.teacher">Teacher</button>
+            </div>
+            
+            <!-- Student Login Form -->
+            <div class="login-form active" id="studentForm">
+                <div class="form-group">
+                    <label for="studentId" data-translate="login.student_id">School ID or Phone Number</label>
+                    <input type="text" id="studentId" placeholder="Enter your ID or phone number">
+                </div>
+                <button class="login-submit-btn" onclick="handleStudentLogin()" data-translate="login.student_submit">Login as Student</button>
+                <button class="guest-btn" onclick="handleGuestLogin()" data-translate="login.guest">Try as Guest</button>
+            </div>
+            
+            <!-- Teacher Login Form -->
+            <div class="login-form" id="teacherForm">
+                <div class="form-group">
+                    <label for="teacherEmail" data-translate="login.email">Email</label>
+                    <input type="email" id="teacherEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="teacherPassword" data-translate="login.password">Password</label>
+                    <input type="password" id="teacherPassword" placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <label for="schoolCode" data-translate="login.school_code">School Code (Optional)</label>
+                    <input type="text" id="schoolCode" placeholder="Enter school code">
+                </div>
+                <button class="login-submit-btn" onclick="handleTeacherLogin()" data-translate="login.teacher_submit">Login as Teacher</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#about" data-translate="footer.about">About</a>
+                <a href="#privacy" data-translate="footer.privacy">Privacy</a>
+                <a href="#contact" data-translate="footer.contact">Contact</a>
+            </div>
+            <div class="footer-credits">
+                <p data-translate="footer.credits">Built with AI + Open Source Technologies</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="src/js/main.js"></script>
+    <script src="src/js/login.js"></script>
 </body>
 </html>
