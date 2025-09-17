@@ -44,9 +44,9 @@ const LoginManager = {
             const sessionData = {
                 user: userData,
                 timestamp: Date.now(),
-                language: window.PathsalaApp.currentLanguage()
+                language: window.PaathShalaApp.currentLanguage()
             };
-            localStorage.setItem('Pathsala-session', JSON.stringify(sessionData));
+            localStorage.setItem('PaathShala-session', JSON.stringify(sessionData));
         } catch (e) {
             console.log('Cannot save session data');
         }
@@ -55,7 +55,7 @@ const LoginManager = {
     // Load user session
     loadSession() {
         try {
-            const sessionData = localStorage.getItem('Pathsala-session');
+            const sessionData = localStorage.getItem('PaathShala-session');
             if (sessionData) {
                 const parsed = JSON.parse(sessionData);
                 // Check if session is less than 24 hours old
@@ -81,7 +81,7 @@ const LoginManager = {
     // Show welcome back message
     showWelcomeBack(user) {
         const message = `Welcome back, ${user.name || user.id || 'User'}!`;
-        window.PathsalaApp.showNotification(message, 'success');
+        window.PaathShalaApp.showNotification(message, 'success');
         
         // Auto-redirect based on user type
         setTimeout(() => {
@@ -96,13 +96,13 @@ const LoginManager = {
     // Save data for offline sync
     saveOfflineData(data) {
         try {
-            let offlineData = JSON.parse(localStorage.getItem('Pathsala-offline-data') || '[]');
+            let offlineData = JSON.parse(localStorage.getItem('PaathShala-offline-data') || '[]');
             offlineData.push({
                 ...data,
                 timestamp: Date.now(),
                 synced: false
             });
-            localStorage.setItem('Pathsala-offline-data', JSON.stringify(offlineData));
+            localStorage.setItem('PaathShala-offline-data', JSON.stringify(offlineData));
         } catch (e) {
             console.log('Cannot save offline data');
         }
@@ -111,7 +111,7 @@ const LoginManager = {
     // Load offline data
     loadOfflineData() {
         try {
-            const offlineData = localStorage.getItem('Pathsala-offline-data');
+            const offlineData = localStorage.getItem('PaathShala-offline-data');
             if (offlineData) {
                 this.offlineQueue = JSON.parse(offlineData).filter(item => !item.synced);
             }
@@ -123,7 +123,7 @@ const LoginManager = {
     // Process offline queue when back online
     processOfflineQueue() {
         if (this.offlineQueue.length > 0) {
-            window.PathsalaApp.showNotification('Syncing offline data...', 'info');
+            window.PaathShalaApp.showNotification('Syncing offline data...', 'info');
             
             // Process each queued item
             this.offlineQueue.forEach(item => {
@@ -132,7 +132,7 @@ const LoginManager = {
             
             // Clear offline queue
             this.offlineQueue = [];
-            localStorage.removeItem('Pathsala-offline-data');
+            localStorage.removeItem('PaathShala-offline-data');
         }
     },
 
@@ -145,10 +145,10 @@ const LoginManager = {
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             
-            window.PathsalaApp.showNotification('Data synced successfully!', 'success');
+            window.PaathShalaApp.showNotification('Data synced successfully!', 'success');
         } catch (error) {
             console.error('Sync failed:', error);
-            window.PathsalaApp.showNotification('Sync failed. Will retry later.', 'error');
+            window.PaathShalaApp.showNotification('Sync failed. Will retry later.', 'error');
         }
     },
 
@@ -156,19 +156,19 @@ const LoginManager = {
     redirectToStudentDashboard(user) {
         // In a real app, this would navigate to student dashboard
         console.log('Redirecting to student dashboard:', user);
-        window.PathsalaApp.showNotification('Redirecting to student dashboard...', 'info');
+        window.PaathShalaApp.showNotification('Redirecting to student dashboard...', 'info');
     },
 
     redirectToTeacherDashboard(user) {
         // In a real app, this would navigate to teacher dashboard
         console.log('Redirecting to teacher dashboard:', user);
-        window.PathsalaApp.showNotification('Redirecting to teacher dashboard...', 'info');
+        window.PaathShalaApp.showNotification('Redirecting to teacher dashboard...', 'info');
     },
 
     // Clear session
     clearSession() {
         try {
-            localStorage.removeItem('Pathsala-session');
+            localStorage.removeItem('PaathShala-session');
             this.currentUser = null;
         } catch (e) {
             console.log('Cannot clear session');
@@ -181,14 +181,14 @@ async function handleStudentLogin() {
     const studentId = document.getElementById('studentId').value.trim();
     
     if (!studentId) {
-        window.PathsalaApp.showNotification('Please enter your School ID or Phone Number', 'error');
+        window.PaathShalaApp.showNotification('Please enter your School ID or Phone Number', 'error');
         return;
     }
 
     // Validate input
-    const validation = window.PathsalaApp.validateForm({ studentId });
+    const validation = window.PaathShalaApp.validateForm({ studentId });
     if (validation.length > 0) {
-        window.PathsalaApp.showNotification(validation[0], 'error');
+        window.PaathShalaApp.showNotification(validation[0], 'error');
         return;
     }
 
@@ -215,7 +215,7 @@ async function handleStudentLogin() {
             LoginManager.currentUser = userData;
             LoginManager.saveSession(userData);
             
-            window.PathsalaApp.showNotification(`Welcome, ${loginData.name}!`, 'success');
+            window.PaathShalaApp.showNotification(`Welcome, ${loginData.name}!`, 'success');
             
             // Clear form
             document.getElementById('studentId').value = '';
@@ -231,7 +231,7 @@ async function handleStudentLogin() {
         
     } catch (error) {
         console.error('Student login error:', error);
-        window.PathsalaApp.showNotification(error.message || 'Login failed. Please try again.', 'error');
+        window.PaathShalaApp.showNotification(error.message || 'Login failed. Please try again.', 'error');
         
         // Save for offline processing if offline
         if (!LoginManager.isOnline) {
@@ -240,7 +240,7 @@ async function handleStudentLogin() {
                 studentId: studentId,
                 timestamp: Date.now()
             });
-            window.PathsalaApp.showNotification('Login saved. Will process when online.', 'info');
+            window.PaathShalaApp.showNotification('Login saved. Will process when online.', 'info');
         }
         
     } finally {
@@ -258,14 +258,14 @@ async function handleTeacherLogin() {
     const schoolCode = document.getElementById('schoolCode').value.trim();
     
     if (!email || !password) {
-        window.PathsalaApp.showNotification('Please fill in all required fields', 'error');
+        window.PaathShalaApp.showNotification('Please fill in all required fields', 'error');
         return;
     }
 
     // Validate input
-    const validation = window.PathsalaApp.validateForm({ email, password });
+    const validation = window.PaathShalaApp.validateForm({ email, password });
     if (validation.length > 0) {
-        window.PathsalaApp.showNotification(validation[0], 'error');
+        window.PaathShalaApp.showNotification(validation[0], 'error');
         return;
     }
 
@@ -292,7 +292,7 @@ async function handleTeacherLogin() {
             LoginManager.currentUser = userData;
             LoginManager.saveSession(userData);
             
-            window.PathsalaApp.showNotification(`Welcome back, ${loginData.name}!`, 'success');
+            window.PaathShalaApp.showNotification(`Welcome back, ${loginData.name}!`, 'success');
             
             // Clear form (except school code for convenience)
             document.getElementById('teacherEmail').value = '';
@@ -309,7 +309,7 @@ async function handleTeacherLogin() {
         
     } catch (error) {
         console.error('Teacher login error:', error);
-        window.PathsalaApp.showNotification(error.message || 'Login failed. Please check your credentials.', 'error');
+        window.PaathShalaApp.showNotification(error.message || 'Login failed. Please check your credentials.', 'error');
         
         // Save for offline processing if offline
         if (!LoginManager.isOnline) {
@@ -319,7 +319,7 @@ async function handleTeacherLogin() {
                 schoolCode: schoolCode,
                 timestamp: Date.now()
             });
-            window.PathsalaApp.showNotification('Login saved. Will process when online.', 'info');
+            window.PaathShalaApp.showNotification('Login saved. Will process when online.', 'info');
         }
         
     } finally {
@@ -342,13 +342,13 @@ function handleGuestLogin() {
     LoginManager.currentUser = guestUser;
     
     // Don't save guest sessions to localStorage
-    window.PathsalaApp.showNotification('Welcome, Guest! Limited features available offline.', 'info');
+    window.PaathShalaApp.showNotification('Welcome, Guest! Limited features available offline.', 'info');
     
     // Redirect to guest mode
     setTimeout(() => {
         console.log('Redirecting to guest mode');
         // In real app, this would open limited offline content
-        window.PathsalaApp.showNotification('Opening offline practice mode...', 'info');
+        window.PaathShalaApp.showNotification('Opening offline practice mode...', 'info');
     }, 1500);
 }
 
@@ -441,7 +441,7 @@ async function processTeacherLogin(email, password, schoolCode) {
 // Logout function
 function handleLogout() {
     LoginManager.clearSession();
-    window.PathsalaApp.showNotification('Logged out successfully', 'info');
+    window.PaathShalaApp.showNotification('Logged out successfully', 'info');
     
     // Clear any forms
     document.querySelectorAll('input').forEach(input => {
