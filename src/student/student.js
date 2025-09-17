@@ -1,8 +1,16 @@
 // Subjects data for selected classes
 const subjectsByClass = {
+  6: [
+    "Mathematics", "Science", "English", "Odia", "History",
+    "Geography", "Hindi", "Sanskrit"
+  ],
   7: [
-    "English", "Odia", "Hindi", "History & Civics", "Geography",
+    "English", "Odia", "Hindi", "History", "Geography",
     "Mathematics", "Physics", "Chemistry", "Biology", "Computer"
+  ],
+  8: [
+    "Science", "Mathematics", "Geometry", "English", "Odia",
+    "Social Science", "Hindi", "Sanskrit"
   ],
   9: [
     "English", "Odia", "Mathematics", "General Science", "Social Science",
