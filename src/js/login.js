@@ -44,9 +44,9 @@ const LoginManager = {
             const sessionData = {
                 user: userData,
                 timestamp: Date.now(),
-                language: window.EduPlayApp.currentLanguage()
+                language: window.PathsalaApp.currentLanguage()
             };
-            localStorage.setItem('eduplay-session', JSON.stringify(sessionData));
+            localStorage.setItem('Pathsala-session', JSON.stringify(sessionData));
         } catch (e) {
             console.log('Cannot save session data');
         }
@@ -55,7 +55,7 @@ const LoginManager = {
     // Load user session
     loadSession() {
         try {
-            const sessionData = localStorage.getItem('eduplay-session');
+            const sessionData = localStorage.getItem('Pathsala-session');
             if (sessionData) {
                 const parsed = JSON.parse(sessionData);
                 // Check if session is less than 24 hours old
@@ -81,7 +81,7 @@ const LoginManager = {
     // Show welcome back message
     showWelcomeBack(user) {
         const message = `Welcome back, ${user.name || user.id || 'User'}!`;
-        window.EduPlayApp.showNotification(message, 'success');
+        window.PathsalaApp.showNotification(message, 'success');
         
         // Auto-redirect based on user type
         setTimeout(() => {
@@ -96,13 +96,13 @@ const LoginManager = {
     // Save data for offline sync
     saveOfflineData(data) {
         try {
-            let offlineData = JSON.parse(localStorage.getItem('eduplay-offline-data') || '[]');
+            let offlineData = JSON.parse(localStorage.getItem('Pathsala-offline-data') || '[]');
             offlineData.push({
                 ...data,
                 timestamp: Date.now(),
                 synced: false
             });
-            localStorage.setItem('eduplay-offline-data', JSON.stringify(offlineData));
+            localStorage.setItem('Pathsala-offline-data', JSON.stringify(offlineData));
         } catch (e) {
             console.log('Cannot save offline data');
         }
@@ -111,7 +111,7 @@ const LoginManager = {
     // Load offline data
     loadOfflineData() {
         try {
-            const offlineData = localStorage.getItem('eduplay-offline-data');
+            const offlineData = localStorage.getItem('Pathsala-offline-data');
             if (offlineData) {
                 this.offlineQueue = JSON.parse(offlineData).filter(item => !item.synced);
             }
@@ -123,7 +123,7 @@ const LoginManager = {
     // Process offline queue when back online
     processOfflineQueue() {
         if (this.offlineQueue.length > 0) {
-            window.EduPlayApp.showNotification('Syncing offline data...', 'info');
+            window.PathsalaApp.showNotification('Syncing offline data...', 'info');
             
             // Process each queued item
             this.offlineQueue.forEach(item => {
@@ -132,7 +132,7 @@ const LoginManager = {
             
             // Clear offline queue
             this.offlineQueue = [];
-            localStorage.removeItem('eduplay-offline-data');
+            localStorage.removeItem('Pathsala-offline-data');
         }
     },
 
@@ -145,10 +145,10 @@ const LoginManager = {
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
             
-            window.EduPlayApp.showNotification('Data synced successfully!', 'success');
+            window.PathsalaApp.showNotification('Data synced successfully!', 'success');
         } catch (error) {
             console.error('Sync failed:', error);
-            window.EduPlayApp.showNotification('Sync failed. Will retry later.', 'error');
+            window.PathsalaApp.showNotification('Sync failed. Will retry later.', 'error');
         }
     },
 
@@ -156,19 +156,19 @@ const LoginManager = {
     redirectToStudentDashboard(user) {
         // In a real app, this would navigate to student dashboard
         console.log('Redirecting to student dashboard:', user);
-        window.EduPlayApp.showNotification('Redirecting to student dashboard...', 'info');
+        window.PathsalaApp.showNotification('Redirecting to student dashboard...', 'info');
     },
 
     redirectToTeacherDashboard(user) {
         // In a real app, this would navigate to teacher dashboard
         console.log('Redirecting to teacher dashboard:', user);
-        window.EduPlayApp.showNotification('Redirecting to teacher dashboard...', 'info');
+        window.PathsalaApp.showNotification('Redirecting to teacher dashboard...', 'info');
     },
 
     // Clear session
     clearSession() {
         try {
-            localStorage.removeItem('eduplay-session');
+            localStorage.removeItem('Pathsala-session');
             this.currentUser = null;
         } catch (e) {
             console.log('Cannot clear session');
@@ -181,14 +181,14 @@ async function handleStudentLogin() {
     const studentId = document.getElementById('studentId').value.trim();
     
     if (!studentId) {
-        window.EduPlayApp.showNotification('Please enter your School ID or Phone Number', 'error');
+        window.PathsalaApp.showNotification('Please enter your School ID or Phone Number', 'error');
         return;
     }
 
     // Validate input
-    const validation = window.EduPlayApp.validateForm({ studentId });
+    const validation = window.PathsalaApp.validateForm({ studentId });
     if (validation.length > 0) {
-        window.EduPlayApp.showNotification(validation[0], 'error');
+        window.PathsalaApp.showNotification(validation[0], 'error');
         return;
     }
 
@@ -215,7 +215,7 @@ async function handleStudentLogin() {
             LoginManager.currentUser = userData;
             LoginManager.saveSession(userData);
             
-            window.EduPlayApp.showNotification(`Welcome, ${loginData.name}!`, 'success');
+            window.PathsalaApp.showNotification(`Welcome, ${loginData.name}!`, 'success');
             
             // Clear form
             document.getElementById('studentId').value = '';
@@ -231,7 +231,7 @@ async function handleStudentLogin() {
         
     } catch (error) {
         console.error('Student login error:', error);
-        window.EduPlayApp.showNotification(error.message || 'Login failed. Please try again.', 'error');
+        window.PathsalaApp.showNotification(error.message || 'Login failed. Please try again.', 'error');
         
         // Save for offline processing if offline
         if (!LoginManager.isOnline) {
@@ -240,7 +240,7 @@ async function handleStudentLogin() {
                 studentId: studentId,
                 timestamp: Date.now()
             });
-            window.EduPlayApp.showNotification('Login saved. Will process when online.', 'info');
+            window.PathsalaApp.showNotification('Login saved. Will process when online.', 'info');
         }
         
     } finally {
@@ -258,14 +258,14 @@ async function handleTeacherLogin() {
     const schoolCode = document.getElementById('schoolCode').value.trim();
     
     if (!email || !password) {
-        window.EduPlayApp.showNotification('Please fill in all required fields', 'error');
+        window.PathsalaApp.showNotification('Please fill in all required fields', 'error');
         return;
     }
 
     // Validate input
-    const validation = window.EduPlayApp.validateForm({ email, password });
+    const validation = window.PathsalaApp.validateForm({ email, password });
     if (validation.length > 0) {
-        window.EduPlayApp.showNotification(validation[0], 'error');
+        window.PathsalaApp.showNotification(validation[0], 'error');
         return;
     }
 
@@ -292,7 +292,7 @@ async function handleTeacherLogin() {
             LoginManager.currentUser = userData;
             LoginManager.saveSession(userData);
             
-            window.EduPlayApp.showNotification(`Welcome back, ${loginData.name}!`, 'success');
+            window.PathsalaApp.showNotification(`Welcome back, ${loginData.name}!`, 'success');
             
             // Clear form (except school code for convenience)
             document.getElementById('teacherEmail').value = '';
@@ -309,7 +309,7 @@ async function handleTeacherLogin() {
         
     } catch (error) {
         console.error('Teacher login error:', error);
-        window.EduPlayApp.showNotification(error.message || 'Login failed. Please check your credentials.', 'error');
+        window.PathsalaApp.showNotification(error.message || 'Login failed. Please check your credentials.', 'error');
         
         // Save for offline processing if offline
         if (!LoginManager.isOnline) {
@@ -319,7 +319,7 @@ async function handleTeacherLogin() {
                 schoolCode: schoolCode,
                 timestamp: Date.now()
             });
-            window.EduPlayApp.showNotification('Login saved. Will process when online.', 'info');
+            window.PathsalaApp.showNotification('Login saved. Will process when online.', 'info');
         }
         
     } finally {
@@ -342,13 +342,13 @@ function handleGuestLogin() {
     LoginManager.currentUser = guestUser;
     
     // Don't save guest sessions to localStorage
-    window.EduPlayApp.showNotification('Welcome, Guest! Limited features available offline.', 'info');
+    window.PathsalaApp.showNotification('Welcome, Guest! Limited features available offline.', 'info');
     
     // Redirect to guest mode
     setTimeout(() => {
         console.log('Redirecting to guest mode');
         // In real app, this would open limited offline content
-        window.EduPlayApp.showNotification('Opening offline practice mode...', 'info');
+        window.PathsalaApp.showNotification('Opening offline practice mode...', 'info');
     }, 1500);
 }
 
@@ -441,7 +441,7 @@ async function processTeacherLogin(email, password, schoolCode) {
 // Logout function
 function handleLogout() {
     LoginManager.clearSession();
-    window.EduPlayApp.showNotification('Logged out successfully', 'info');
+    window.PathsalaApp.showNotification('Logged out successfully', 'info');
     
     // Clear any forms
     document.querySelectorAll('input').forEach(input => {

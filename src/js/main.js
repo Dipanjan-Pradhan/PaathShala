@@ -7,7 +7,7 @@ const translations = {
         'hero.subtitle': 'A lightweight, multilingual gamified platform for grades 6–12 that works offline on low-cost devices.',
         'hero.start_learning': 'Start Learning',
         'hero.teacher_dashboard': 'Teacher Dashboard',
-        'features.title': 'Why EduPlay?',
+        'features.title': 'Why Pathsala?',
         'features.games.title': 'Interactive Games',
         'features.games.desc': 'STEM lessons through engaging quizzes and activities that make learning fun and memorable.',
         'features.offline.title': 'Offline Access',
@@ -41,7 +41,7 @@ const translations = {
         'hero.subtitle': 'कक्षा 6-12 के लिए एक हल्का, बहुभाषी गेमिफाइड प्लेटफॉर्म जो कम लागत के उपकरणों पर ऑफलाइन काम करता है।',
         'hero.start_learning': 'सीखना शुरू करें',
         'hero.teacher_dashboard': 'शिक्षक डैशबोर्ड',
-        'features.title': 'EduPlay क्यों?',
+        'features.title': 'Pathsala क्यों?',
         'features.games.title': 'इंटरैक्टिव गेम्स',
         'features.games.desc': 'आकर्षक क्विज़ और गतिविधियों के माध्यम से STEM पाठ जो सीखने को मज़ेदार और यादगार बनाते हैं।',
         'features.offline.title': 'ऑफलाइन एक्सेस',
@@ -75,7 +75,7 @@ const translations = {
         'hero.subtitle': 'କଲାସ ୬-୧୨ ପାଇଁ ଏକ ହାଲୁକା, ବହୁଭାଷିକ ଗେମିଫାଏଡ ପ୍ଲାଟଫର୍ମ ଯାହା କମ ଖର୍ଚ୍ଚ ଯନ୍ତ୍ରରେ ଅଫଲାଇନ କାମ କରେ।',
         'hero.start_learning': 'ଶିକ୍ଷା ଆରମ୍ଭ କରନ୍ତୁ',
         'hero.teacher_dashboard': 'ଶିକ୍ଷକ ଡାସବୋର୍ଡ',
-        'features.title': 'EduPlay କାହିଁକି?',
+        'features.title': 'Pathsala କାହିଁକି?',
         'features.games.title': 'ଇଣ୍ଟରାକ୍ଟିଭ ଖେଳ',
         'features.games.desc': 'ଆକର୍ଷଣୀୟ କୁଇଜ ଏବଂ କାର୍ଯ୍ୟକଳାପ ମାଧ୍ୟମରେ STEM ପାଠ ଯାହା ଶିକ୍ଷାକୁ ମଜାଦାର ଏବଂ ସ୍ମରଣୀୟ କରିଥାଏ।',
         'features.offline.title': 'ଅଫଲାଇନ ଆକସେସ',
@@ -109,7 +109,7 @@ const translations = {
         'hero.subtitle': 'ক্লাস ৬-১২ এর জন্য একটি হালকা, বহুভাষিক গেমিফাইড প্ল্যাটফর্ম যা কম খরচের ডিভাইসে অফলাইনে কাজ করে।',
         'hero.start_learning': 'শেখা শুরু করুন',
         'hero.teacher_dashboard': 'শিক্ষক ড্যাশবোর্ড',
-        'features.title': 'EduPlay কেন?',
+        'features.title': 'Pathsala কেন?',
         'features.games.title': 'ইন্টারেক্টিভ গেম',
         'features.games.desc': 'আকর্ষণীয় কুইজ এবং কার্যক্রমের মাধ্যমে STEM পাঠ যা শেখাকে মজাদার এবং স্মরণীয় করে তোলে।',
         'features.offline.title': 'অফলাইন অ্যাক্সেস',
@@ -239,7 +239,7 @@ function updateLanguage() {
 // Save language preference
 function saveLanguage() {
     try {
-        localStorage.setItem('eduplay-language', currentLanguage);
+        localStorage.setItem('Pathsala-language', currentLanguage);
     } catch (e) {
         console.log('Cannot save language preference');
     }
@@ -248,7 +248,7 @@ function saveLanguage() {
 // Load saved language
 function loadSavedLanguage() {
     try {
-        const saved = localStorage.getItem('eduplay-language');
+        const saved = localStorage.getItem('Pathsala-language');
         if (saved && translations[saved]) {
             currentLanguage = saved;
             document.getElementById('languageSelect').value = saved;
@@ -406,11 +406,11 @@ function showNotification(message, type = 'info') {
 // Sync offline data (placeholder)
 function syncOfflineData() {
     try {
-        const offlineData = localStorage.getItem('eduplay-offline-data');
+        const offlineData = localStorage.getItem('Pathsala-offline-data');
         if (offlineData) {
             // Here you would send offline data to server
             console.log('Syncing offline data:', JSON.parse(offlineData));
-            localStorage.removeItem('eduplay-offline-data');
+            localStorage.removeItem('Pathsala-offline-data');
             showNotification('Data synced successfully!', 'success');
         }
     } catch (e) {
@@ -478,7 +478,7 @@ function validateForm(formData) {
 }
 
 // Export functions for use in other files
-window.EduPlayApp = {
+window.PathsalaApp = {
     showNotification,
     validateForm,
     scrollToLogin,
