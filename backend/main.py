@@ -23,7 +23,7 @@ async def favicon():
 
 def main():
     print("Hello")
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+    uvicorn.run(app, host='127.0.0.1', port=3002)
       
 @app.get("/", response_class=HTMLResponse)
 async def root():
