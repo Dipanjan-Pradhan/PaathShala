@@ -1,0 +1,49 @@
+Gaming for learning
+
+1. Points & Rewards System
+   +10 points → Watch a video
+   +20 points → Complete a quiz
+   +50 points → full marks on quiz
+
+Redeem-1000(pen),5000(notebook),10000(color pencil) etc
+
+2. Quests & Challenges
+
+Instead of boring homework, frame tasks as “quests”.
+Example:
+“Solve 5 math puzzles to rescue the character 🧙”
+“Complete today’s science quiz to unlock the next experiment video 🧪”
+
+3. Leaderboards
+Show top scorers in a classroom leaderboard.
+Example: “Top 5 Learners of the Week 📊”
+Can be at school level, village level, or friend groups.
+
+4. Interactive Quizzes with Lifelines
+
+Like KBC (Kaun Banega Crorepati), add lifelines:
+50-50 (remove two wrong answers)
+Ask a Friend (share hint)
+Retry Chance
+
+5. Mini-Games for Learning
+
+Instead of plain text quizzes, make short interactive games:
+Drag & drop answers into blanks.
+Match the picture with the word.
+Memory card games for vocabulary.
+
+6. Quick Math Quiz (Beat the Timer)
+
+Students get 10 seconds per question.
+Example: 12 + 8 = ?
+Correct answer = +10 points, Wrong = -5 points.
+Bonus(+20 points) if they solve in under 5 seconds.
+
+7.Geography Games
+
+like map pointing,capital,river name etc.
+
+8.True and False games
+
+9.Computer Typing Speed test
