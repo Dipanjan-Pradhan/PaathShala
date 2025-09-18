@@ -53,6 +53,7 @@ const subjectTitle = document.getElementById("subjectTitle");
 const termSection = document.getElementById("termSection");
 const termList = document.getElementById("termList");
 const termTitle = document.getElementById("termTitle");
+const profileButton = document.getElementById("profileButton");
 
 // Handle class click
 classCards.forEach(card => {
@@ -60,6 +61,10 @@ classCards.forEach(card => {
     const selectedClass = card.getAttribute("data-class");
     loadSubjects(selectedClass);
   });
+});
+
+profileButton.addEventListener("click", () => {
+  window.location.href = "studentProfilePage/profile.html";
 });
 
 function loadSubjects(selectedClass) {

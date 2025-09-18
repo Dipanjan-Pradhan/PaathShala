@@ -159,11 +159,30 @@
             <!-- Student Login Form -->
             <div class="login-form active" id="studentForm">
                 <div class="form-group">
-                    <label for="studentId" data-translate="login.student_id">School ID or Phone Number</label>
-                    <input type="text" id="studentId" placeholder="Enter your ID or phone number">
+                    <label for="studentName">Name</label>
+                    <input type="text" id="studentName" placeholder="Enter your name" required>
                 </div>
-                <button class="login-submit-btn" onclick="handleStudentLogin()" data-translate="login.student_submit">Login as Student</button>
+                <div class="form-group">
+                    <label for="studentMobile">Mobile Number</label>
+                    <input type="text" id="studentMobile" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentEmail">Email (Optional)</label>
+                    <input type="email" id="studentEmail" placeholder="Enter your email">
+                </div>
+                <button class="login-submit-btn" onclick="handleStudentSignup()" data-translate="login.student_submit">Sign Up as Student</button>
                 <button class="guest-btn" onclick="handleGuestLogin()" data-translate="login.guest">Try as Guest</button>
+            </div>
+            
+            <!-- OTP Verification Form -->
+            <div class="login-form" id="otpForm" style="display:none;">
+                <div class="form-group">
+                    <label for="otpInput">Enter OTP</label>
+                    <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6" required>
+                </div>
+                <button class="login-submit-btn" onclick="handleOtpVerification()">Verify OTP</button>
+                <button class="guest-btn" onclick="cancelOtpVerification()">Cancel</button>
+                <p id="otpError" style="color:red; display:none;"></p>
             </div>
             
             <!-- Teacher Login Form -->
