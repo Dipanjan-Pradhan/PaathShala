@@ -1,10 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+import uvicorn
 from database import get_db, engine, Base
 import schemas, crud, auth
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+def main():
+    print("Hello")
+    uvicorn.run(app, host='127.0.0.1', port=8000)
+    
+@app.get("/")
+async def root():
+    return {"message": "hello man"}
 
 # Signup - New Student
 @app.post("/signup")
@@ -65,3 +74,7 @@ def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid OTP")
     crud.update_password(db, data.mobile, data.new_password)
     return {"message": "Password reset successfully"}
+
+
+if __name__ == "__main__":
+    main()
