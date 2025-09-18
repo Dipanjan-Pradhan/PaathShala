@@ -3,17 +3,32 @@ from sqlalchemy.orm import Session
 import uvicorn
 from database import get_db, engine, Base
 import schemas, crud, auth
+from pathlib import Path
+from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
+# Serving static files
+BASE_DIR = Path(__file__).resolve().parent.parent
+app.mount("/assets", StaticFiles(directory=BASE_DIR / "assets" / "img"), name="assets")
+app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(BASE_DIR / "assets" / "img" / "PaathShala.jpg")
+
 def main():
     print("Hello")
     uvicorn.run(app, host='127.0.0.1', port=8000)
-    
-@app.get("/")
+      
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"message": "hello man"}
+    html_path = Path(__file__).parent.parent / "src" / "pages" / "index.html"
+    return html_path.read_text(encoding="utf-8")
 
 # Signup - New Student
 @app.post("/signup")
