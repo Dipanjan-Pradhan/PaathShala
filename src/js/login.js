@@ -15,72 +15,13 @@ async function handleStudentSignup() {
     return;
   }
 
-  // Send OTP request to backend
-  try {
-    const response = await fetch(`${API_BASE_URL}/http://127.0.0.1:5000/send_otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobile })
-    });
-    const data = await response.json();
-    if (response.ok) {
-      // Show OTP form
-      document.getElementById('studentForm').style.display = 'none';
-      document.getElementById('otpForm').style.display = 'block';
-      document.getElementById('otpError').style.display = 'none';
-      // Store mobile and name in sessionStorage for later use
-      sessionStorage.setItem('signupMobile', mobile);
-      sessionStorage.setItem('signupName', name);
-      sessionStorage.setItem('signupEmail', email);
-    } else {
-      alert(data.error || 'Failed to send OTP. Please try again.');
-    }
-  } catch (error) {
-    alert('Error sending OTP: ' + error.message);
-  }
-}
+  // Since OTP verification is removed, just alert success and proceed
+  alert('Signup successful for ' + name + '. You can now login.');
 
-// Handle OTP verification
-async function handleOtpVerification() {
-  const otp = document.getElementById('otpInput').value.trim();
-  const mobile = sessionStorage.getItem('signupMobile');
-  const name = sessionStorage.getItem('signupName');
-  const email = sessionStorage.getItem('signupEmail');
-
-  if (!otp || otp.length !== 6) {
-    document.getElementById('otpError').textContent = 'Please enter a valid 6-digit OTP.';
-    document.getElementById('otpError').style.display = 'block';
-    return;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/http://127.0.0.1:5000/verify_otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobile, otp })
-    });
-    const data = await response.json();
-    if (response.ok) {
-      // OTP verified, redirect to student dashboard
-      window.location.href = data.redirect_url || 'src/student/index.html';
-    } else {
-      document.getElementById('otpError').textContent = data.error || 'Invalid OTP. Please try again.';
-      document.getElementById('otpError').style.display = 'block';
-    }
-  } catch (error) {
-    document.getElementById('otpError').textContent = 'Error verifying OTP: ' + error.message;
-    document.getElementById('otpError').style.display = 'block';
-  }
-}
-
-// Cancel OTP verification and go back to signup form
-function cancelOtpVerification() {
-  document.getElementById('otpForm').style.display = 'none';
-  document.getElementById('studentForm').style.display = 'block';
-  document.getElementById('otpError').style.display = 'none';
-  sessionStorage.removeItem('signupMobile');
-  sessionStorage.removeItem('signupName');
-  sessionStorage.removeItem('signupEmail');
+  // Optionally, clear the form or redirect
+  document.getElementById('studentName').value = '';
+  document.getElementById('studentMobile').value = '';
+  document.getElementById('studentEmail').value = '';
 }
 
 // Placeholder functions for other login handlers
