@@ -1,20 +1,19 @@
 from fastapi import FastAPI, Query, Depends, HTTPException
 from sqlalchemy.orm import Session
 import uvicorn
+import webbrowser
+
+from database import get_db, engine, Base
+import schemas, crud, auth
 from pathlib import Path
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
-import schemas, crud, auth
-from database import get_db, engine, Base
-
-# Create tables
+# Initialize DB
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
-# ---------------------------
-# STATIC FILES
-# ---------------------------
+# Serving static files
 BASE_DIR = Path(__file__).resolve().parent.parent
 app.mount("/assets", StaticFiles(directory=BASE_DIR / "assets" / "img"), name="assets")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
@@ -28,60 +27,84 @@ async def root():
     html_path = Path(__file__).parent.parent / "src" / "pages" / "index.html"
     return html_path.read_text(encoding="utf-8")
 
-# ---------------------------
-# AUTHENTICATION
-# ---------------------------
+# -------------------
+# AUTHENTICATION APIs (GET version)
+# -------------------
 
-# ✅ Signup - New Student
-@app.post("/signup")
-def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
-    if student.password != student.confirm_password:
+# Signup - New Student
+@app.get("/signup", response_class=HTMLResponse)
+def signup(
+    name: str = Query(...),
+    mobile: str = Query(...),
+    email: str | None = Query(None),
+    password: str = Query(...),
+    confirm_password: str = Query(...),
+    db: Session = Depends(get_db),
+):
+    if password != confirm_password:
         raise HTTPException(status_code=400, detail="Passwords do not match")
-
-    if crud.get_student_by_mobile(db, student.mobile):
+    if crud.get_student_by_mobile(db, mobile):
         raise HTTPException(status_code=400, detail="Mobile already registered")
-
-    if student.email and crud.get_student_by_email(db, student.email):
+    if email and crud.get_student_by_email(db, email):
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    crud.create_student(db, student)
-    # Redirect to student dashboard after signup
-    return RedirectResponse(url="/student", status_code=303)
+    student_data = schemas.StudentCreate(
+        name=name, mobile=mobile, email=email,
+        password=password, confirm_password=confirm_password
+    )
+    crud.create_student(db, student_data)
+    
+    # Redirect to student page
+    html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
+    return html_path.read_text(encoding="utf-8")
 
-
-# ✅ Login
-@app.post("/login")
-def login(student: schemas.StudentLogin, db: Session = Depends(get_db)):
+# Login
+@app.get("/login", response_class=HTMLResponse)
+def login(
+    mobile: str | None = Query(None),
+    email: str | None = Query(None),
+    password: str = Query(...),
+    db: Session = Depends(get_db)
+):
     db_student = None
-    if student.mobile:
-        db_student = crud.get_student_by_mobile(db, student.mobile)
-    elif student.email:
-        db_student = crud.get_student_by_email(db, student.email)
+    if mobile:
+        db_student = crud.get_student_by_mobile(db, mobile)
+    elif email:
+        db_student = crud.get_student_by_email(db, email)
 
     if not db_student:
         raise HTTPException(status_code=400, detail="Student not found")
-
-    if not auth.verify_password(student.password, db_student.hashed_password):
+    if not auth.verify_password(password, db_student.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect password")
 
-    # Redirect to student dashboard after login
-    return RedirectResponse(url="/student", status_code=303)
-
-
-# ✅ Student Dashboard Page
-@app.get("/student", response_class=HTMLResponse)
-def student_page():
+    # Redirect to student page
     html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
-    if not html_path.exists():
-        return "<h2>🎓 Welcome Student!</h2><p>Create <b>student.html</b> in src/pages/ to customize dashboard.</p>"
     return html_path.read_text(encoding="utf-8")
 
+# Forgot Password - Direct Reset (no OTP)
+@app.get("/reset-password", response_class=HTMLResponse)
+def reset_password(
+    mobile: str = Query(...),
+    new_password: str = Query(...),
+    confirm_password: str = Query(...),
+    db: Session = Depends(get_db)
+):
+    if new_password != confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match")
+    student = crud.get_student_by_mobile(db, mobile)
+    if not student:
+        raise HTTPException(status_code=400, detail="Student not found")
+    crud.update_password(db, mobile, new_password)
+    return "<h2>✅ Password reset successfully! Please log in again.</h2>"
 
-# ---------------------------
-# STARTING SERVER
-# ---------------------------
+# -------------------
+# START SERVER
+# -------------------
 def main():
-    uvicorn.run(app, host="127.0.0.1", port=3002, reload=True)
+    url = "http://127.0.0.1:3002"
+    print(f"🚀 Server running at {url}")
+    webbrowser.open(url)  # Auto-open browser
+    uvicorn.run(app, host="127.0.0.1", port=3002)
 
 if __name__ == "__main__":
     main()
