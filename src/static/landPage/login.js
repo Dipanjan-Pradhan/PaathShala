@@ -37,7 +37,8 @@ async function handleStudentSignup() {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Signup failed');
-    alert('Signup successful. Please verify OTP sent to your number, then log in.');
+    localStorage.setItem('PaathShala-token', data.access_token);
+    window.location.href = '/student';
   } catch (err) {
     alert(err.message);
     return;
@@ -110,7 +111,8 @@ async function handleTeacherSignup() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Teacher signup failed');
 
-    alert(`Signup successful. Your teacher code: ${data.code}`);
+    localStorage.setItem('PaathShala-token', data.access_token);
+    window.location.href = '/teacher';
   } catch (err) {
     alert(err.message);
     return;
