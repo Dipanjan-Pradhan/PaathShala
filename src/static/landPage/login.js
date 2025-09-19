@@ -212,3 +212,15 @@ function handleTeacherLogin() {
 function handleGuestLogin() {
   alert('Guest login functionality not implemented yet.');
 }
+
+function togglePasswordVisibility(icon) {
+    const input = icon.previousElementSibling;
+    if (input.type === "password") {
+        input.type = "text";
+        icon.src = "../../assets/hide.svg";
+    } else {
+        input.type = "password";
+        icon.src = "../../assets/show.svg";
+    }
+}
+
