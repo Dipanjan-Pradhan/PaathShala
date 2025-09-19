@@ -14,7 +14,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # Serving static files
-BASE_DIR = Path(_file_).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 app.mount("/assets", StaticFiles(directory=BASE_DIR / "assets" / "img"), name="assets")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
 
@@ -24,7 +24,7 @@ async def favicon():
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
-    html_path = Path(_file_).parent.parent / "src" / "pages" / "index.html"
+    html_path = BASE_DIR / "src" / "pages" / "index.html"
     return html_path.read_text(encoding="utf-8")
 
 # -------------------
@@ -55,7 +55,7 @@ def signup(
     crud.create_student(db, student_data)
     
     # Redirect to student page
-    html_path = Path(_file_).parent.parent / "src" / "pages" / "student.html"
+    html_path = BASE_DIR / "src" / "pages" / "student.html"
     return html_path.read_text(encoding="utf-8")
 
 # Login
@@ -78,7 +78,7 @@ def login(
         raise HTTPException(status_code=400, detail="Incorrect password")
 
     # Redirect to student page
-    html_path = Path(_file_).parent.parent / "src" / "pages" / "student.html"
+    html_path = BASE_DIR / "src" / "pages" / "student.html"
     return html_path.read_text(encoding="utf-8")
 
 # Forgot Password - Direct Reset (no OTP)
@@ -106,5 +106,5 @@ def main():
     webbrowser.open(url)  # Auto-open browser
     uvicorn.run(app, host="127.0.0.1", port=3002)
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
