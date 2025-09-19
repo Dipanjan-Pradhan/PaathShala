@@ -9,7 +9,6 @@ class Student(Base):
     mobile = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=True)
     hashed_password = Column(String, nullable=False)
-    otp = Column(String, nullable=True)
     is_verified = Column(Boolean, default=False)
 
 
@@ -20,5 +19,4 @@ class Teacher(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    otp = Column(String, nullable=True)
     is_verified = Column(Boolean, default=False)
