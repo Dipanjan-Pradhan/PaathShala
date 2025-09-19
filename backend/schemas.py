@@ -1,27 +1,5 @@
 from pydantic import BaseModel, EmailStr
-
-class StudentCreate(BaseModel):
-    name: str
-    mobile: str
-    email: EmailStr | None = None
-    password: str
-    confirm_password: str
-
-class StudentLogin(BaseModel):
-    mobile: str | None = None
-    email: EmailStr | None = None
-    password: str
-
-class OTPVerification(BaseModel):
-    mobile: str
-    otp: str
-
-class ResetPassword(BaseModel):
-    mobile: str
-    otp: str
-    new_password: str
-    confirm_password: str
-
+from typing import Optional
 
 class TeacherCreate(BaseModel):
     name: str
@@ -33,3 +11,20 @@ class TeacherCreate(BaseModel):
 class TeacherLogin(BaseModel):
     email: EmailStr
     password: str
+    
+class StudentCreate(BaseModel):
+    name: str
+    mobile: str
+    email: Optional[str]
+    password: str
+    confirm_password: str
+
+class StudentLogin(BaseModel):
+    mobile: Optional[str]
+    email: Optional[str]
+    password: str
+
+class PasswordReset(BaseModel):
+    mobile: str
+    new_password: str
+    confirm_password: str
