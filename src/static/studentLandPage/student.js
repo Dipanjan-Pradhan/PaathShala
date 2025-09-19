@@ -62,6 +62,39 @@ const chaptersBySubject = {
       ]
     }
     // Add more subjects as needed
+  },
+  10: {
+    "Odia": {
+      "Term I": [
+        "ଆଶା",
+        "ବୁଦ୍ଧୁ",
+        "କଳାହାନ୍ତିର ମହିଳା",
+        "ଜଗନ୍ନାଥ",
+        "ଗଳ୍ପ",
+        "ମାଆ",
+        "ଅଳକାନନ୍ଦା",
+        "ଆତ୍ମଜୀବନ",
+        "ବଳରାମ",
+        "ରାଧାକାନ୍ତ ରଥଙ୍କ ଆତ୍ମକଥା",
+        "ଚାଳିଗାଲା ସାଧାରଣ ହୃଦୟ",
+        "ଅଶ୍ରୁଧାରା ଓ ହସ୍ତାକ୍ଷର",
+        "ମାନବ ସମ୍ମାନର ତେଜ",
+        "ଫୁଲ୍ମୁହି"
+      ],
+      "Term II": [
+        "ମହାତ୍ମା ଗାନ୍ଧୀଙ୍କ ଆଶା",
+        "କଳାହାନ୍ତିର କଥା",
+        "ପ୍ରଜ୍ଞାସାଧନା (ମାନବତା)",
+        "ମାତୃଭାଷାର ଲୋକଜୀବନ",
+        "ଜଣେକଣ୍ଡୁ ବିଚିତ୍ରାନନ୍ଦ",
+        "କୋଳାହଳ",
+        "ହରିଶ୍ଚନ୍ଦ୍ର",
+        "ଦୁଇଟି ଲୋକକଥା",
+        "ବଳରାମ",
+        "ଓଡ଼ିଆ ସାହିତ୍ୟର କଥା",
+        "ଜଳ, ଅଗ୍ନି ଓ ବନ୍ଦୀଶିବ"
+      ]
+    }
   }
   // Add for other classes
 };
@@ -72,14 +105,14 @@ const chapterOptionsData = {
     "English": {
       "Term I": {
         "Chapter 1 - Looking for Vulture’s Egg": {
-          "Study Resources": ["https://www.youtube.com/watch?v=example1", "https://www.youtube.com/watch?v=example2"],
-          "Notes": "https://example.com/notes/chapter1",
+          "Study Videos": ["https://youtu.be/Uu3bS5Wo4Bg?si=q8ah_ZBq5FaZA7q5", "https://youtu.be/zwOrCNbWAXQ?si=aCI3DoRt_oMLEotW"],
+          "Notes": "https://drive.google.com/file/d/1FmGj_auruXs3WehfuzGlu-WrRM4slZe1/view?usp=drivesdk",
           "Quizzes": "https://example.com/quizzes/chapter1",
           "Games": "https://example.com/games/chapter1"
         },
         "Chapter 2 - The School Boy": {
-          "Study Resources": ["https://www.youtube.com/watch?v=example3"],
-          "Notes": "https://example.com/notes/chapter2",
+          "Study Videos": ["https://youtu.be/XPeAhNTOeAU?si=Ws4NrxJeaxlJ-0tv", "https://youtu.be/kKClC_FV8mY?si=tX-PC6INNnCI05Cy"],
+          "Notes": "https://drive.google.com/file/d/1VFuToc2HSpWaS4DvI3NKNngBRbbUXOLz/view?usp=drivesdk",
           "Quizzes": "https://example.com/quizzes/chapter2",
           "Games": "https://example.com/games/chapter2"
         }
@@ -87,10 +120,44 @@ const chapterOptionsData = {
       },
       "Term II": {
         "Chapter 8 - Travel": {
-          "Study Resources": ["https://www.youtube.com/watch?v=example4"],
+          "Study Videos": ["https://www.youtube.com/watch?v=example4"],
           "Notes": "https://example.com/notes/chapter8",
           "Quizzes": "https://example.com/quizzes/chapter8",
           "Games": "https://example.com/games/chapter8"
+        }
+        // Add for other chapters
+      }
+    }
+  },
+  10: {
+    "Odia": {
+      "Term I": {
+        "ଆଶା": {
+          "Study Videos": ["https://www.youtube.com/watch?v=odia1"],
+          "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
+          "Quizzes": "https://example.com/quizzes/odia1",
+          "Games": "https://example.com/games/odia1"
+        },
+        "କଳାହାନ୍ତିର ମହିଳା": {
+          "Study Videos": ["https://www.youtube.com/watch?v=odia2"],
+          "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
+          "Quizzes": "https://example.com/quizzes/odia2",
+          "Games": "https://example.com/games/odia2"
+        }
+        // Add for other chapters
+      },
+      "Term II": {
+        "ମହାତ୍ମା ଗାନ୍ଧୀଙ୍କ ଆଶା": {
+          "Study Videos": ["https://www.youtube.com/watch?v=odia3"],
+          "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
+          "Quizzes": "https://example.com/quizzes/odia3",
+          "Games": "https://example.com/games/odia3"
+        },
+        "କଳାହାନ୍ତିର କଥା": {
+          "Study Videos": ["https://www.youtube.com/watch?v=odia4"],
+          "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
+          "Quizzes": "https://example.com/quizzes/odia4",
+          "Games": "https://example.com/games/odia4"
         }
         // Add for other chapters
       }
@@ -134,7 +201,7 @@ function loadSubjects(selectedClass) {
   chaptersList.innerHTML = "";
 
   // Scroll to subject section after showing it
-  subjectSection.scrollIntoView({ behavior: "smooth" });
+  subjectSection.scrollIntoView({ block: "center", behavior: "smooth" });
 
   if (subjectsByClass[selectedClass]) {
     subjectsByClass[selectedClass].forEach(sub => {
@@ -167,11 +234,12 @@ function loadTerms(selectedClass, selectedSubject) {
     termList.appendChild(btn);
   });
 
-  subjectSection.classList.add("hidden");
+  // Instead of hiding subjectSection, keep it visible to allow easy subject switching
+  // subjectSection.classList.add("hidden");
   termSection.classList.remove("hidden");
 
   // Scroll to term section after showing it
-  termSection.scrollIntoView({ behavior: "smooth" });
+  termSection.scrollIntoView({ block: "center", behavior: "smooth" });
 
   // Keep chaptersSection visible to allow switching terms and viewing chapters
   // chaptersSection.classList.add("hidden");
@@ -205,7 +273,7 @@ function showChapters(selectedClass, selectedSubject, selectedTerm) {
   chaptersSection.classList.remove("hidden");
 
   // Scroll to chapters section after showing it
-  chaptersSection.scrollIntoView({ behavior: "smooth" });
+  chaptersSection.scrollIntoView({ block: "center", behavior: "smooth" });
 }
 
 function showChapterOptions(selectedClass, selectedSubject, selectedTerm, selectedChapter) {
@@ -241,7 +309,7 @@ function showChapterOptions(selectedClass, selectedSubject, selectedTerm, select
   chapterOptionsSection.classList.remove("hidden");
 
   // Scroll to chapter options section after showing it
-  chapterOptionsSection.scrollIntoView({ behavior: "smooth" });
+  chapterOptionsSection.scrollIntoView({ block: "center", behavior: "smooth" });
 
   backToChaptersBtn.onclick = () => {
     chapterOptionsSection.classList.add("hidden");
