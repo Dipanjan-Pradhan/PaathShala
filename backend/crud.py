@@ -17,13 +17,11 @@ def get_student_by_email(db: Session, email: str) -> Optional[Student]:
 
 def create_student(db: Session, student: schemas.StudentCreate) -> Student:
     hashed_password = auth.hash_password(student.password)
-    otp = auth.generate_otp()
     db_student = Student(
         name=student.name,
         mobile=student.mobile,
         email=student.email,
         hashed_password=hashed_password,
-        otp=otp,
         is_verified=False,
     )
     db.add(db_student)
@@ -32,23 +30,11 @@ def create_student(db: Session, student: schemas.StudentCreate) -> Student:
     return db_student
 
 
-def verify_otp(db: Session, mobile: str, otp: str) -> Optional[Student]:
-    student = get_student_by_mobile(db, mobile)
-    if not student or student.otp != otp:
-        return None
-    student.is_verified = True
-    student.otp = None
-    db.commit()
-    db.refresh(student)
-    return student
-
-
 def update_password(db: Session, mobile: str, new_password: str) -> None:
     student = get_student_by_mobile(db, mobile)
     if not student:
         return
     student.hashed_password = auth.hash_password(new_password)
-    student.otp = None
     db.commit()
 
 
@@ -59,12 +45,10 @@ def get_teacher_by_email(db: Session, email: str) -> Optional[Teacher]:
 
 def create_teacher(db: Session, teacher: schemas.TeacherCreate) -> Teacher:
     hashed_password = auth.hash_password(teacher.password)
-    otp = auth.generate_otp()
     db_teacher = Teacher(
         name=teacher.name,
         email=teacher.email,
         hashed_password=hashed_password,
-        otp=otp,
         is_verified=False,
     )
     db.add(db_teacher)
