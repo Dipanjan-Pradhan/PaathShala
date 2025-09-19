@@ -241,3 +241,226 @@ dd {
   font-weight: 700;
   color: #2d3748;
 }
+
+/* Student Code Styles */
+.student-code-container {
+  margin-top: 20px;
+}
+
+.student-code-container h4 {
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.student-code {
+  background: #f8fafc;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.copy-code-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.copy-code-btn:hover {
+  background: #5a67d8;
+}
+
+/* Profile Actions Styles */
+.profile-actions {
+  margin-top: 30px;
+}
+
+.profile-actions header {
+  margin-bottom: 15px;
+}
+
+.profile-actions h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  flex: 1;
+  min-width: 200px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn:hover {
+  background: #5a67d8;
+}
+
+/* Edit Mode Styles */
+.edit-mode .edit-btn {
+  background: #48bb78;
+  color: white;
+}
+
+.edit-mode .edit-btn:hover {
+  background: #38a169;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.edit-mode .details-group h4 {
+  color: #667eea;
+}
+
+.edit-mode .details-group h4::after {
+  content: " (Editing)";
+  color: #718096;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #667eea;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error States */
+.error {
+  border-color: #f56565 !important;
+}
+
+.error-message {
+  color: #f56565;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Success States */
+.success {
+  border-color: #48bb78 !important;
+}
+
+/* Profile Picture Upload Styles */
+.profile-image-container {
+  position: relative;
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-image-container:hover .upload-overlay {
+  opacity: 1;
+}
+
+.upload-overlay-text {
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Copy Button Animation */
+.copy-success {
+  background: #48bb78 !important;
+  transform: scale(1.05);
+}
+
+/* Responsive Design for Edit Mode */
+@media (max-width: 768px) {
+  .edit-mode dl {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .edit-mode dt {
+    font-weight: 700;
+    color: #4a5568;
+  }
+
+  .edit-mode dd {
+    margin-bottom: 10px;
+  }
+
+  .edit-input {
+    font-size: 1rem; /* Prevent zoom on iOS */
+  }
+}

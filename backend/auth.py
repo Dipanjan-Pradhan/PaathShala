@@ -20,3 +20,15 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def get_current_user(token: str = "dummy_token"):
+    """
+    Dummy function for development.
+    In production, this would decode and validate the JWT token.
+    """
+    # For development purposes, just return a dummy user
+    # In production, you would:
+    # 1. Decode the JWT token
+    # 2. Validate the token
+    # 3. Return the user information
+    return "authenticated_user"

@@ -72,8 +72,13 @@ async function handleStudentSignin() {
     if (!res.ok) {
       throw new Error(data.detail || 'Login failed');
     }
-    // Save token and redirect
+    // Save token and login data
     localStorage.setItem('PaathShala-token', data.access_token);
+    localStorage.setItem('studentLoginData', JSON.stringify({
+        name: name,
+        mobile: mobile,
+        email: null // Email not provided in login
+    }));
     window.location.href = '/student';
   } catch (err) {
     alert(err.message);

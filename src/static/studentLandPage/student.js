@@ -64,6 +64,27 @@ const chaptersBySubject = {
     // Add more subjects as needed
   },
   10: {
+    "English": {
+      "Term I": [
+        "All Things Bright & Beautiful",
+        "A Letter to God",
+        "At the High School",
+        "A Tiger in the House",
+        "The Solitary Reaper",
+        "Festivals of North-East India",
+        "The Beggar",
+        "A Great Son of India"
+      ],
+      "Term II": [
+        "Air Pollution: A Hidden Menace",
+        "Village Song",
+        "The Flower-School",
+        "The Village Judge",
+        "A Grain as big as a Hen’s Egg",
+        "From the Formalin Jar",
+        "School’s Goodbye"
+      ]
+    },
     "Odia": {
       "Term I": [
         "ଆଶା",
@@ -130,6 +151,102 @@ const chapterOptionsData = {
     }
   },
   10: {
+    "English": {
+      "Term I": {
+        "All Things Bright & Beautiful": {
+          "Study Resources": ["https://example.com/study/bright"],
+          "Notes": "https://example.com/notes/bright",
+          "Quizzes": "https://example.com/quizzes/bright",
+          "Games": "https://example.com/games/bright"
+        },
+        "A Letter to God": {
+          "Study Resources": ["https://example.com/study/letter"],
+          "Notes": "https://example.com/notes/letter",
+          "Quizzes": "https://example.com/quizzes/letter",
+          "Games": "https://example.com/games/letter"
+        },
+        "At the High School": {
+          "Study Resources": ["https://example.com/study/highschool"],
+          "Notes": "https://example.com/notes/highschool",
+          "Quizzes": "https://example.com/quizzes/highschool",
+          "Games": "https://example.com/games/highschool"
+        },
+        "A Tiger in the House": {
+          "Study Resources": ["https://example.com/study/tiger"],
+          "Notes": "https://example.com/notes/tiger",
+          "Quizzes": "https://example.com/quizzes/tiger",
+          "Games": "https://example.com/games/tiger"
+        },
+        "The Solitary Reaper": {
+          "Study Resources": ["https://example.com/study/reaper"],
+          "Notes": "https://example.com/notes/reaper",
+          "Quizzes": "https://example.com/quizzes/reaper",
+          "Games": "https://example.com/games/reaper"
+        },
+        "Festivals of North-East India": {
+          "Study Resources": ["https://example.com/study/festivals"],
+          "Notes": "https://example.com/notes/festivals",
+          "Quizzes": "https://example.com/quizzes/festivals",
+          "Games": "https://example.com/games/festivals"
+        },
+        "The Beggar": {
+          "Study Resources": ["https://example.com/study/beggar"],
+          "Notes": "https://example.com/notes/beggar",
+          "Quizzes": "https://example.com/quizzes/beggar",
+          "Games": "https://example.com/games/beggar"
+        },
+        "A Great Son of India": {
+          "Study Resources": ["https://example.com/study/son"],
+          "Notes": "https://example.com/notes/son",
+          "Quizzes": "https://example.com/quizzes/son",
+          "Games": "https://example.com/games/son"
+        }
+      },
+      "Term II": {
+        "Air Pollution: A Hidden Menace": {
+          "Study Resources": ["https://example.com/study/pollution"],
+          "Notes": "https://example.com/notes/pollution",
+          "Quizzes": "https://example.com/quizzes/pollution",
+          "Games": "https://example.com/games/pollution"
+        },
+        "Village Song": {
+          "Study Resources": ["https://example.com/study/song"],
+          "Notes": "https://example.com/notes/song",
+          "Quizzes": "https://example.com/quizzes/song",
+          "Games": "https://example.com/games/song"
+        },
+        "The Flower-School": {
+          "Study Resources": ["https://example.com/study/flower"],
+          "Notes": "https://example.com/notes/flower",
+          "Quizzes": "https://example.com/quizzes/flower",
+          "Games": "https://example.com/games/flower"
+        },
+        "The Village Judge": {
+          "Study Resources": ["https://example.com/study/judge"],
+          "Notes": "https://example.com/notes/judge",
+          "Quizzes": "https://example.com/quizzes/judge",
+          "Games": "https://example.com/games/judge"
+        },
+        "A Grain as big as a Hen’s Egg": {
+          "Study Resources": ["https://example.com/study/grain"],
+          "Notes": "https://example.com/notes/grain",
+          "Quizzes": "https://example.com/quizzes/grain",
+          "Games": "https://example.com/games/grain"
+        },
+        "From the Formalin Jar": {
+          "Study Resources": ["https://example.com/study/jar"],
+          "Notes": "https://example.com/notes/jar",
+          "Quizzes": "https://example.com/quizzes/jar",
+          "Games": "https://example.com/games/jar"
+        },
+        "School’s Goodbye": {
+          "Study Resources": ["https://example.com/study/goodbye"],
+          "Notes": "https://example.com/notes/goodbye",
+          "Quizzes": "https://example.com/quizzes/goodbye",
+          "Games": "https://example.com/games/goodbye"
+        }
+      }
+    },
     "Odia": {
       "Term I": {
         "ଆଶା": {
@@ -187,7 +304,8 @@ classCards.forEach(card => {
 });
 
 profileButton.addEventListener("click", () => {
-  window.location.href = "/studentProfilePage/profile";
+  // window.location.href = "/studentProfilePage/profile";
+  window.location.href = "../pages/profile.html";
 });
 
 function loadSubjects(selectedClass) {

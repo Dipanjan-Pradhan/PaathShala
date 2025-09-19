@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Class 10 English Quiz Results</title>
+  <link rel="icon" type="image/x-icon" href="../../assets/PaathShala.jpg">
+  <link rel="icon" href="/favicon.ico" type="image/jpeg" />
+  <link rel="stylesheet" href="../static/landPage/style.css" />
+  <link rel="stylesheet" href="../static/quiz/quiz10English.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="/"><img src="../../assets/PaathShala.jpg" alt="PaathShala" class="logo"></a>
+        <a href="/" class="logo-text">PaathShala</a>
+      </div>
+      <div class="nav-right">
+        <div class="language-selector">
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+            <option value="or">ଓଡ଼ିଆ</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </div>
+        <div class="profile-button-container">
+          <button id="profileButton" title="Profile">Profile</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="quiz-container">
+    <h1>Class 10 English Quiz Results</h1>
+    <section id="resultSection">
+      <p id="timeTakenDisplay"></p>
+      <p id="scoreDisplay"></p>
+      <p id="accuracyDisplay"></p>
+      <p id="levelDisplay"></p>
+      <button id="retryBtn">Take Quiz Again</button>
+    </section>
+  </main>
+
+  <script src="../static/landPage/main.js"></script>
+  <script src="../static/quiz/quiz10EnglishResult.js"></script>
+</body>
+</html>

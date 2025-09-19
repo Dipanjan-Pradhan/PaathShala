@@ -10,78 +10,50 @@
   <div class="profile-container">
     <aside class="profile-sidebar">
       <div class="profile-image-container">
-        <img src="../../assets/profile-placeholder.png" alt="Profile Picture" class="profile-image" />
+        <img src="../../assets/profile-placeholder.png" alt="Profile Picture" class="profile-image" id="profileImage" />
         <button class="upload-btn" title="Change Profile Picture">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 24 24"><path d="M12 5c-3.86 0-7 3.14-7 7 0 3.86 3.14 7 7 7s7-3.14 7-7c0-3.86-3.14-7-7-7zm0 12c-2.76 0-5-2.24-5-5 0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.76-2.24 5-5 5z"/><path d="M12 7v5l4.28 2.54.72-1.21-3.5-2.08V7z"/></svg>
         </button>
       </div>
-      <h2 class="profile-name">Anirban Pal</h2>
-      <div class="profile-role">Gorila Student Master</div>
-      <div class="profile-status">NA</div>
+      <h2 class="profile-name" id="studentName">Student Name</h2>
+      <div class="profile-role">Student</div>
+      <div class="student-code-container">
+        <h4>Student Code</h4>
+        <div class="student-code" id="studentCode">Loading...</div>
+        <button class="copy-code-btn" id="copyCodeBtn" title="Copy Student Code">📋 Copy</button>
+      </div>
     </aside>
     <main class="profile-main">
-      <section class="level-up-overview">
-        <div class="level-box">
-          <h3>Total XP</h3>
-          <div class="xp-value">0 <span class="xp-icon">XP</span></div>
-        </div>
-        <div class="level-box">
-          <h3>Highest Level</h3>
-          <div class="level-value">Level 1 🥉</div>
-        </div>
-      </section>
-
       <section class="profile-details">
         <header>
-          <h3>Profile Detail</h3>
-          <button class="edit-btn" title="Edit Profile">✏️ Edit</button>
+          <h3>Profile Details</h3>
+          <button class="edit-btn" id="editBtn" title="Edit Profile">✏️ Edit</button>
         </header>
         <div class="details-group">
-          <h4>Personal Details</h4>
+          <h4>Personal Information</h4>
           <dl>
-            <dt>Name</dt><dd>Anirban Gandu</dd>
-            <dt>Mobile No</dt><dd>69696969696</dd>
-            <dt>Email</dt><dd>aniGorila69@gorila.com</dd>
-            <dt>Living City/Village/Town</dt><dd>Zoo</dd>
-          </dl>
-        </div>
-        <div class="details-group">
-          <h4>Academic Details</h4>
-          <dl>
-            <dt>Class</dt><dd>11</dd>
-            <dt>Board/State Board</dt><dd>ZOO BOARD</dd>
-            <dt>Exams</dt><dd>skills</dd>
-            <dt>Language</dt><dd>Gorila Language</dd>
+            <dt>Name</dt><dd id="displayName">Loading...</dd>
+            <dt>Mobile No</dt><dd id="displayMobile">Loading...</dd>
+            <dt>Email</dt><dd id="displayEmail">Loading...</dd>
+            <dt>Password</dt><dd id="displayPassword">Loading...</dd>
           </dl>
         </div>
       </section>
 
-      <section class="performance-overview">
+      <section class="profile-actions">
         <header>
-          <h3>Performance as Doubt Solver</h3>
-          <a href="#" class="know-more">Know more</a>
+          <h3>Profile Actions</h3>
         </header>
-        <div class="performance-boxes">
-          <div class="performance-box">
-            <h4>Total Doubts Solved</h4>
-            <p>2</p>
-          </div>
-          <div class="performance-box">
-            <h4>Satisfactory Rate</h4>
-            <p>100%</p>
-          </div>
-          <div class="performance-box">
-            <h4>Average Response Time</h4>
-            <p>0s</p>
-          </div>
-          <div class="performance-box">
-            <h4>Average Rating</h4>
-            <p>0</p>
-          </div>
+        <div class="action-buttons">
+          <button class="action-btn" id="uploadPictureBtn">📷 Upload Profile Picture</button>
+          <button class="action-btn" id="changePasswordBtn">🔒 Change Password</button>
         </div>
       </section>
     </main>
   </div>
+
+  <!-- Hidden file input for profile picture upload -->
+  <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
 
   <script src="../static/studentProfilePage/profile.js"></script>
 </body>

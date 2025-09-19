@@ -38,6 +38,24 @@ def update_password(db: Session, mobile: str, new_password: str) -> None:
     db.commit()
 
 
+def update_student_profile(db: Session, current_mobile: str, name: str, mobile: str, email: str) -> Student:
+    student = get_student_by_mobile(db, current_mobile)
+    if not student:
+        return None
+
+    # Update fields if provided
+    if name:
+        student.name = name
+    if mobile:
+        student.mobile = mobile
+    if email is not None:  # Allow empty string to clear email
+        student.email = email
+
+    db.commit()
+    db.refresh(student)
+    return student
+
+
 # Teacher helpers
 def get_teacher_by_email(db: Session, email: str) -> Optional[Teacher]:
     return db.query(Teacher).filter(Teacher.email == email).first()
