@@ -40,8 +40,28 @@ const chaptersBySubject = {
     "Mathematics": {
       "Term I": ["Chapter 1: Integers", "Chapter 2: Fractions", "Chapter 3: Decimals"],
       "Term II": ["Chapter 4: Algebra", "Chapter 5: Geometry", "Chapter 6: Statistics"]
+    },
+    "English": {
+      "Term I": [
+        "Chapter 1 - Looking for Vulture’s Egg",
+        "Chapter 2 - The School Boy",
+        "Chapter 3 - Three Questions",
+        "Chapter 4 - Coromandal Fishers",
+        "Chapter 5 - The Lady of Shalott",
+        "Chapter 6 - The Homecoming",
+        "Chapter 7 - Grandpa Learns to Read and Write"
+      ],
+      "Term II": [
+        "Chapter 8 - Travel",
+        "Chapter 9 - Dares Salaam to Nairobi",
+        "Chapter 10 - The Invisible Man",
+        "Chapter 11 - Have you Got Brook in your Heart?",
+        "Chapter 12 - The Model Millionare",
+        "Chapter 13 - The Human Seasons",
+        "Chapter 14 - Unbreakable"
+      ]
     }
-    // Add more
+    // Add more subjects as needed
   }
   // Add for other classes
 };
@@ -53,6 +73,9 @@ const subjectTitle = document.getElementById("subjectTitle");
 const termSection = document.getElementById("termSection");
 const termList = document.getElementById("termList");
 const termTitle = document.getElementById("termTitle");
+const chaptersSection = document.getElementById("chaptersSection");
+const chaptersList = document.getElementById("chaptersList");
+const chaptersTitle = document.getElementById("chaptersTitle");
 const profileButton = document.getElementById("profileButton");
 
 // Handle class click
@@ -74,6 +97,8 @@ function loadSubjects(selectedClass) {
   termSection.classList.add("hidden");
   subjectSection.classList.remove("hidden");
   termList.innerHTML = "";
+  chaptersSection.classList.add("hidden");
+  chaptersList.innerHTML = "";
 
   if (subjectsByClass[selectedClass]) {
     subjectsByClass[selectedClass].forEach(sub => {
@@ -108,16 +133,32 @@ function loadTerms(selectedClass, selectedSubject) {
 
   subjectSection.classList.add("hidden");
   termSection.classList.remove("hidden");
+  // Keep chaptersSection visible to allow switching terms and viewing chapters
+  // chaptersSection.classList.add("hidden");
+  // chaptersList.innerHTML = "";
 }
 
 function showChapters(selectedClass, selectedSubject, selectedTerm) {
+  chaptersList.innerHTML = "";
+  chaptersTitle.textContent = `Chapters for ${selectedSubject} - ${selectedTerm} (Class ${selectedClass})`;
+
   const chapters = (chaptersBySubject[selectedClass] &&
                     chaptersBySubject[selectedClass][selectedSubject] &&
                     chaptersBySubject[selectedClass][selectedSubject][selectedTerm]) || [];
 
   if (chapters.length > 0) {
-    alert(`Chapters for ${selectedSubject} - ${selectedTerm}:\n` + chapters.join("\n"));
+    chapters.forEach(chapter => {
+      const btn = document.createElement("button");
+      btn.classList.add("chapter-card");
+      btn.textContent = chapter;
+      // You can add onclick for further actions, e.g., load chapter content
+      chaptersList.appendChild(btn);
+    });
   } else {
-    alert(`No chapters found for ${selectedSubject} - ${selectedTerm}`);
+    chaptersList.innerHTML = "<p>No chapters found for this term.</p>";
   }
+
+  // Keep termSection visible to allow switching terms
+  // termSection.classList.add("hidden");
+  chaptersSection.classList.remove("hidden");
 }
