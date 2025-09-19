@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,15 @@
     <link rel="icon" href="/favicon.ico" type="image/jpeg" />
     <link rel="stylesheet" href="../static/landPage/style.css">
 </head>
+
 <body>
     <!-- Navigation Bar form sayan -->
     <nav class="navbar">
-    
+
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="../../assets/img/PaathShala.jpg" alt="PaathShala" class="logo">
-                <a href= "./index.html" class="logo-text">PaathShala</a>
+                <img src="../../assets/PaathShala.jpg" alt="PaathShala" class="logo">
+                <a href="./" class="logo-text">PaathShala</a>
                 <!-- <button></button> -->
             </div>
             <div class="nav-right">
@@ -36,11 +38,15 @@
     <section class="hero">
         <div class="hero-overlay">
             <div class="hero-content">
-                <h1 class="hero-title" data-translate="hero.title">Learning that Rewards — for Every Child, Anywhere.</h1>
-                <p class="hero-subtitle" data-translate="hero.subtitle">A lightweight, multilingual gamified platform for grades 6–12 that works offline on low-cost devices.</p>
+                <h1 class="hero-title" data-translate="hero.title">Learning that Rewards — for Every Child, Anywhere.
+                </h1>
+                <p class="hero-subtitle" data-translate="hero.subtitle">A lightweight, multilingual gamified platform
+                    for grades 6–12 that works offline on low-cost devices.</p>
                 <div class="hero-buttons">
-                    <button class="cta-btn primary" onclick="scrollToLogin('student')" data-translate="hero.start_learning">Start Learning</button>
-                    <button class="cta-btn secondary" onclick="scrollToLogin('teacher')" data-translate="hero.teacher_dashboard">Teacher Dashboard</button>
+                    <button class="cta-btn primary" onclick="scrollToLogin('student')"
+                        data-translate="hero.start_learning">Start Learning</button>
+                    <button class="cta-btn secondary" onclick="scrollToLogin('teacher')"
+                        data-translate="hero.teacher_dashboard">Teacher Dashboard</button>
                 </div>
             </div>
         </div>
@@ -48,38 +54,44 @@
 
     <!-- Features Section -->
     <section class="features">
-        <div class="container" id = "disappear">
+        <div class="container" id="disappear">
             <h2 class="section-title" data-translate="features.title">Why PaathShala?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎮</div>
                     <h3 data-translate="features.games.title">Interactive Games</h3>
-                    <p data-translate="features.games.desc">STEM lessons through engaging quizzes and activities that make learning fun and memorable.</p>
+                    <p data-translate="features.games.desc">STEM lessons through engaging quizzes and activities that
+                        make learning fun and memorable.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📶</div>
                     <h3 data-translate="features.offline.title">Offline Access</h3>
-                    <p data-translate="features.offline.desc">Works even with low or no internet connection. Progress syncs automatically when back online.</p>
+                    <p data-translate="features.offline.desc">Works even with low or no internet connection. Progress
+                        syncs automatically when back online.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌍</div>
                     <h3 data-translate="features.multilingual.title">Multilingual</h3>
-                    <p data-translate="features.multilingual.desc">Content available in local languages for better understanding and accessibility.</p>
+                    <p data-translate="features.multilingual.desc">Content available in local languages for better
+                        understanding and accessibility.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3 data-translate="features.analytics.title">Teacher Analytics</h3>
-                    <p data-translate="features.analytics.desc">Track student progress, assign tasks, and get detailed insights into learning patterns.</p>
+                    <p data-translate="features.analytics.desc">Track student progress, assign tasks, and get detailed
+                        insights into learning patterns.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌟</div>
                     <h3 data-translate="features.joyfulLearning.title">Joyful Learning</h3>
-                    <p data-translate="features.joyfulLearning.desc">Learning that feels like play — purposeful, inclusive, and built to spark curiosity </p>
+                    <p data-translate="features.joyfulLearning.desc">Learning that feels like play — purposeful,
+                        inclusive, and built to spark curiosity </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎓</div>
                     <h3 data-translate="features.selfTracking.title">Self Tracking</h3>
-                    <p data-translate="features.selfTracking.desc">Self-tracking helps students track study habits and progress to learn better</p>
+                    <p data-translate="features.selfTracking.desc">Self-tracking helps students track study habits and
+                        progress to learn better</p>
                 </div>
             </div>
         </div>
@@ -89,8 +101,9 @@
     <section class="gamification">
         <div class="container">
             <h2 class="section-title" data-translate="gamification.title">Gamified Learning</h2>
-            <p class="section-subtitle" data-translate="gamification.desc">Students earn points, badges, and leaderboard rankings while mastering concepts.</p>
-            
+            <p class="section-subtitle" data-translate="gamification.desc">Students earn points, badges, and leaderboard
+                rankings while mastering concepts.</p>
+
             <div class="gamification-content">
                 <div class="badges-showcase">
                     <h3 data-translate="gamification.badges">Sample Badges</h3>
@@ -113,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="leaderboard-preview">
                     <h3 data-translate="gamification.leaderboard">Leaderboard</h3>
                     <div class="leaderboard">
@@ -142,7 +155,7 @@
     <section class="login-section" id="loginSection">
         <div class="container">
             <h2 class="section-title" data-translate="login.title">Login</h2>
-            
+
             <!-- Offline Status -->
             <div class="offline-status" id="offlineStatus" style="display: none;">
                 <div class="offline-message">
@@ -150,18 +163,20 @@
                     <span data-translate="login.offline">You are offline. Progress will sync when back online.</span>
                 </div>
             </div>
-            
+
             <!-- Role Switcher -->
             <div class="role-switcher">
                 <button class="role-btn active" data-role="student" data-translate="login.student">Student</button>
                 <button class="role-btn" data-role="teacher" data-translate="login.teacher">Teacher</button>
             </div>
-            
+
             <!-- Student Login Form -->
             <div class="login-form active" id="studentForm">
                 <div class="form-toggle">
-                    <button class="toggle-btn active" data-mode="signin" onclick="toggleStudentMode('signin')" data-translate="login.signin">Sign In</button>
-                    <button class="toggle-btn" data-mode="signup" onclick="toggleStudentMode('signup')" data-translate="login.signup">Sign Up</button>
+                    <button class="toggle-btn active" data-mode="signin" onclick="toggleStudentMode('signin')"
+                        data-translate="login.signin">Sign In</button>
+                    <button class="toggle-btn" data-mode="signup" onclick="toggleStudentMode('signup')"
+                        data-translate="login.signup">Sign Up</button>
                 </div>
                 <div class="signin-fields">
                     <div class="form-group">
@@ -174,9 +189,15 @@
                     </div>
                     <div class="form-group">
                         <label for="studentPasswordSignin">Password</label>
-                        <input type="password" id="studentPasswordSignin" placeholder="Enter your password" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="studentPasswordSignin" placeholder="Enter your password"
+                                required>
+                            <img src="../../assets/show.svg" class="toggle-password"
+                                onclick="togglePasswordVisibility(this)">
+                        </div>
                     </div>
-                    <button class="login-submit-btn" onclick="handleStudentSignin()" data-translate="login.student_signin">Sign In as Student</button>
+                    <button class="login-submit-btn" onclick="handleStudentSignin()"
+                        data-translate="login.student_signin">Sign In as Student</button>
                 </div>
                 <div class="signup-fields" style="display: none;">
                     <div class="form-group">
@@ -193,18 +214,27 @@
                     </div>
                     <div class="form-group">
                         <label for="studentPasswordSignup">Password</label>
-                        <input type="password" id="studentPasswordSignup" placeholder="Enter your password" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="studentPasswordSignup" placeholder="Enter your password"
+                                required>
+                            <img src="../../assets/show.svg" class="toggle-password"
+                                onclick="togglePasswordVisibility(this)">
+                        </div>
                     </div>
-                    <button class="login-submit-btn" onclick="handleStudentSignup()" data-translate="login.student_submit">Sign Up as Student</button>
+                    <button class="login-submit-btn" onclick="handleStudentSignup()"
+                        data-translate="login.student_submit">Sign Up as Student</button>
                 </div>
-                <button class="guest-btn" onclick="handleGuestLogin()" data-translate="login.guest">Try as Guest</button>
+                <button class="guest-btn" onclick="handleGuestLogin()" data-translate="login.guest">Try as
+                    Guest</button>
             </div>
-            
+
             <!-- Teacher Login Form -->
             <div class="login-form" id="teacherForm">
                 <div class="form-toggle">
-                    <button class="toggle-btn active" data-mode="signin" onclick="toggleTeacherMode('signin')" data-translate="login.signin">Sign In</button>
-                    <button class="toggle-btn" data-mode="signup" onclick="toggleTeacherMode('signup')" data-translate="login.signup">Sign Up</button>
+                    <button class="toggle-btn active" data-mode="signin" onclick="toggleTeacherMode('signin')"
+                        data-translate="login.signin">Sign In</button>
+                    <button class="toggle-btn" data-mode="signup" onclick="toggleTeacherMode('signup')"
+                        data-translate="login.signup">Sign Up</button>
                 </div>
                 <div class="signin-fields">
                     <div class="form-group">
@@ -212,14 +242,20 @@
                         <input type="email" id="teacherEmailSignin" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
-                        <label for="teacherPasswordSignin" data-translate="login.password">Password</label>
-                        <input type="password" id="teacherPasswordSignin" placeholder="Enter your password" required>
+                        <label for="teacherPasswordSignin">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="teacherPasswordSignin" placeholder="Enter your password"
+                                required>
+                            <img src="../../assets/show.svg" class="toggle-password"
+                                onclick="togglePasswordVisibility(this)">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="schoolCodeSignin" data-translate="login.school_code">School Code (Optional)</label>
                         <input type="text" id="schoolCodeSignin" placeholder="Enter school code">
                     </div>
-                    <button class="login-submit-btn" onclick="handleTeacherSignin()" data-translate="login.teacher_signin">Sign In as Teacher</button>
+                    <button class="login-submit-btn" onclick="handleTeacherSignin()"
+                        data-translate="login.teacher_signin">Sign In as Teacher</button>
                 </div>
                 <div class="signup-fields" style="display: none;">
                     <div class="form-group">
@@ -231,14 +267,20 @@
                         <input type="email" id="teacherEmailSignup" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
-                        <label for="teacherPasswordSignup" data-translate="login.password">Password</label>
-                        <input type="password" id="teacherPasswordSignup" placeholder="Enter your password" required>
+                        <label for="teacherPasswordSignup">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="teacherPasswordSignup" placeholder="Enter your password"
+                                required>
+                            <img src="../../assets/show.svg" class="toggle-password"
+                                onclick="togglePasswordVisibility(this)">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="schoolCodeSignup" data-translate="login.school_code">School Code (Optional)</label>
                         <input type="text" id="schoolCodeSignup" placeholder="Enter school code">
                     </div>
-                    <button class="login-submit-btn" onclick="handleTeacherSignup()" data-translate="login.teacher_submit">Sign Up as Teacher</button>
+                    <button class="login-submit-btn" onclick="handleTeacherSignup()"
+                        data-translate="login.teacher_submit">Sign Up as Teacher</button>
                 </div>
             </div>
         </div>
@@ -248,9 +290,9 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
-                <a href="./index.html" data-translate="footer.about">About</a>
-                <a href="./index.html" data-translate="footer.privacy">Privacy</a>
-                <a href="./index.html" data-translate="footer.contact">Contact</a>
+                <a href="/" data-translate="footer.about">About</a>
+                <a href="/" data-translate="footer.privacy">Privacy</a>
+                <a href="/" data-translate="footer.contact">Contact</a>
             </div>
             <div class="footer-credits">
                 <p data-translate="footer.credits">Built with AI + Open Source Technologies</p>
@@ -261,4 +303,5 @@
     <script src="../static/landPage/main.js"></script>
     <script src="../static/landPage/login.js"></script>
 </body>
+
 </html>

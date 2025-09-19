@@ -187,7 +187,7 @@ classCards.forEach(card => {
 });
 
 profileButton.addEventListener("click", () => {
-  window.location.href = "studentProfilePage/profile.html";
+  window.location.href = "/studentProfilePage/profile";
 });
 
 function loadSubjects(selectedClass) {
