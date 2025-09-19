@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI,Query, Depends, HTTPException
 from sqlalchemy.orm import Session
 import uvicorn
+
 from database import get_db, engine, Base
 import schemas, crud, auth
 from pathlib import Path
