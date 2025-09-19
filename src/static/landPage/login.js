@@ -74,7 +74,7 @@ async function handleStudentSignin() {
     }
     // Save token and redirect
     localStorage.setItem('PaathShala-token', data.access_token);
-    window.location.href = '/src/pages/student.html';
+    window.location.href = '/student';
   } catch (err) {
     alert(err.message);
   }
@@ -149,7 +149,7 @@ async function handleTeacherSignin() {
       throw new Error(data.detail || 'Login failed');
     }
     localStorage.setItem('PaathShala-token', data.access_token);
-    window.location.href = '/src/pages/profile.html';
+    window.location.href = '/profile';
   } catch (err) {
     alert(err.message);
   }
