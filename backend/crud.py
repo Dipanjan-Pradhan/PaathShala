@@ -1,67 +1,57 @@
-from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db, engine, Base
-import schemas, crud, auth
+from typing import Optional
 
-Base.metadata.create_all(bind=engine)
-app = FastAPI()
+from database import SessionLocal
+from models import Student, Teacher
+import auth
+import schemas
 
-# Signup - New Student
-@app.post("/signup")
-def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
-    if student.password != student.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    if crud.get_student_by_mobile(db, student.mobile):
-        raise HTTPException(status_code=400, detail="Mobile already registered")
-    if student.email and crud.get_student_by_email(db, student.email):
-        raise HTTPException(status_code=400, detail="Email already registered")
-    db_student = crud.create_student(db, student)
-    # Here you would send OTP via SMS in real app
-    return {"message": "Student created, OTP sent", "otp": db_student.otp}  # For testing, show OTP
 
-# Verify OTP
-@app.post("/verify-otp")
-def verify_otp(data: schemas.OTPVerification, db: Session = Depends(get_db)):
-    student = crud.verify_otp(db, data.mobile, data.otp)
-    if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    return {"message": "OTP verified successfully"}
+def get_student_by_mobile(db: Session, mobile: str) -> Optional[Student]:
+    return db.query(Student).filter(Student.mobile == mobile).first()
 
-# Login
-@app.post("/login")
-def login(student: schemas.StudentLogin, db: Session = Depends(get_db)):
-    db_student = None
-    if student.mobile:
-        db_student = crud.get_student_by_mobile(db, student.mobile)
-    elif student.email:
-        db_student = crud.get_student_by_email(db, student.email)
-    if not db_student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    if not auth.verify_password(student.password, db_student.hashed_password):
-        raise HTTPException(status_code=400, detail="Incorrect password")
-    if not db_student.is_verified:
-        raise HTTPException(status_code=400, detail="OTP not verified")
-    token = auth.create_access_token({"sub": db_student.mobile})
-    return {"access_token": token, "token_type": "bearer"}
 
-# Forgot Password - Send OTP
-@app.post("/forgot-password")
-def forgot_password(mobile: str, db: Session = Depends(get_db)):
-    student = crud.get_student_by_mobile(db, mobile)
-    if not student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    student.otp = auth.generate_otp()
+def get_student_by_email(db: Session, email: str) -> Optional[Student]:
+    return db.query(Student).filter(Student.email == email).first()
+
+
+def create_student(db: Session, student: schemas.StudentCreate) -> Student:
+    hashed_password = auth.hash_password(student.password)
+    db_student = Student(
+        name=student.name,
+        mobile=student.mobile,
+        email=student.email,
+        hashed_password=hashed_password,
+        is_verified=False,
+    )
+    db.add(db_student)
     db.commit()
-    # Here you would send OTP via SMS in real app
-    return {"message": "OTP sent for password reset", "otp": student.otp}  # For testing
+    db.refresh(db_student)
+    return db_student
 
-# Reset Password
-@app.post("/reset-password")
-def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
-    if data.new_password != data.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    student = crud.verify_otp(db, data.mobile, data.otp)
+
+def update_password(db: Session, mobile: str, new_password: str) -> None:
+    student = get_student_by_mobile(db, mobile)
     if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    crud.update_password(db, data.mobile, data.new_password)
-    return {"message": "Password reset successfully"}
+        return
+    student.hashed_password = auth.hash_password(new_password)
+    db.commit()
+
+
+# Teacher helpers
+def get_teacher_by_email(db: Session, email: str) -> Optional[Teacher]:
+    return db.query(Teacher).filter(Teacher.email == email).first()
+
+
+def create_teacher(db: Session, teacher: schemas.TeacherCreate) -> Teacher:
+    hashed_password = auth.hash_password(teacher.password)
+    db_teacher = Teacher(
+        name=teacher.name,
+        email=teacher.email,
+        hashed_password=hashed_password,
+        is_verified=False,
+    )
+    db.add(db_teacher)
+    db.commit()
+    db.refresh(db_teacher)
+    return db_teacher

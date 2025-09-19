@@ -21,3 +21,15 @@ class ResetPassword(BaseModel):
     otp: str
     new_password: str
     confirm_password: str
+
+
+class TeacherCreate(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+    confirm_password: str
+
+
+class TeacherLogin(BaseModel):
+    email: EmailStr
+    password: str
