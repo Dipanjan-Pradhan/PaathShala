@@ -55,11 +55,7 @@ def signup(
     crud.create_student(db, student_data)
     
     # Redirect to student page
-<<<<<<< HEAD
     html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
-=======
-    html_path = BASE_DIR / "src" / "pages" / "student.html"
->>>>>>> e9d353f7d0ac535b69d3c4527c778a45b0d1faca
     return html_path.read_text(encoding="utf-8")
 
 # Login
@@ -82,11 +78,7 @@ def login(
         raise HTTPException(status_code=400, detail="Incorrect password")
 
     # Redirect to student page
-<<<<<<< HEAD
     html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
-=======
-    html_path = BASE_DIR / "src" / "pages" / "student.html"
->>>>>>> e9d353f7d0ac535b69d3c4527c778a45b0d1faca
     return html_path.read_text(encoding="utf-8")
 
 # Forgot Password - Direct Reset (no OTP)
@@ -111,10 +103,6 @@ def reset_password(
 def main():
     url = "http://127.0.0.1:3002"
     print(f"🚀 Server running at {url}")
-<<<<<<< HEAD
-    webbrowser.open(url)  # Auto-open browser
-=======
->>>>>>> e9d353f7d0ac535b69d3c4527c778a45b0d1faca
     uvicorn.run(app, host="127.0.0.1", port=3002)
 
 if __name__ == "__main__":
