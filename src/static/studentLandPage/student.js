@@ -66,6 +66,39 @@ const chaptersBySubject = {
   // Add for other classes
 };
 
+// Chapter options data: Study Resources (YouTube links), Notes, Quizzes, Games
+const chapterOptionsData = {
+  7: {
+    "English": {
+      "Term I": {
+        "Chapter 1 - Looking for Vulture’s Egg": {
+          "Study Resources": ["https://www.youtube.com/watch?v=example1", "https://www.youtube.com/watch?v=example2"],
+          "Notes": "Short notes on the chapter: This chapter is about...",
+          "Quizzes": "Quiz link or content here",
+          "Games": "Game link or description here"
+        },
+        "Chapter 2 - The School Boy": {
+          "Study Resources": ["https://www.youtube.com/watch?v=example3"],
+          "Notes": "Short notes: The poem discusses...",
+          "Quizzes": "Quiz content",
+          "Games": "Game content"
+        }
+        // Add for other chapters
+      },
+      "Term II": {
+        "Chapter 8 - Travel": {
+          "Study Resources": ["https://www.youtube.com/watch?v=example4"],
+          "Notes": "Short notes on travel...",
+          "Quizzes": "Quiz",
+          "Games": "Game"
+        }
+        // Add for other chapters
+      }
+    }
+  }
+  // Add for other classes/subjects
+};
+
 const classCards = document.querySelectorAll(".class-card");
 const subjectSection = document.getElementById("subjectSection");
 const subjectList = document.getElementById("subjectList");
@@ -151,7 +184,9 @@ function showChapters(selectedClass, selectedSubject, selectedTerm) {
       const btn = document.createElement("button");
       btn.classList.add("chapter-card");
       btn.textContent = chapter;
-      // You can add onclick for further actions, e.g., load chapter content
+      btn.onclick = () => {
+        showChapterOptions(selectedClass, selectedSubject, selectedTerm, chapter);
+      };
       chaptersList.appendChild(btn);
     });
   } else {
@@ -161,4 +196,54 @@ function showChapters(selectedClass, selectedSubject, selectedTerm) {
   // Keep termSection visible to allow switching terms
   // termSection.classList.add("hidden");
   chaptersSection.classList.remove("hidden");
+}
+
+function showChapterOptions(selectedClass, selectedSubject, selectedTerm, selectedChapter) {
+  const chapterOptionsSection = document.getElementById("chapterOptionsSection");
+  const chapterOptionsList = document.getElementById("chapterOptionsList");
+  const chapterOptionsTitle = document.getElementById("chapterOptionsTitle");
+  const backToChaptersBtn = document.getElementById("backToChaptersBtn");
+
+  chapterOptionsList.innerHTML = "";
+  chapterOptionsTitle.textContent = `Options for ${selectedChapter}`;
+
+  const options = chapterOptionsData[selectedClass] &&
+                   chapterOptionsData[selectedClass][selectedSubject] &&
+                   chapterOptionsData[selectedClass][selectedSubject][selectedTerm] &&
+                   chapterOptionsData[selectedClass][selectedSubject][selectedTerm][selectedChapter];
+
+  if (options) {
+    const optionKeys = ["Study Resources", "Notes", "Quizzes", "Games"];
+    optionKeys.forEach(option => {
+      const btn = document.createElement("button");
+      btn.classList.add("chapter-option-card");
+      btn.textContent = option;
+      btn.onclick = () => {
+        handleOptionClick(option, options[option]);
+      };
+      chapterOptionsList.appendChild(btn);
+    });
+  } else {
+    chapterOptionsList.innerHTML = "<p>No options available for this chapter.</p>";
+  }
+
+  chaptersSection.classList.add("hidden");
+  chapterOptionsSection.classList.remove("hidden");
+
+  backToChaptersBtn.onclick = () => {
+    chapterOptionsSection.classList.add("hidden");
+    chaptersSection.classList.remove("hidden");
+  };
+}
+
+function handleOptionClick(option, data) {
+  if (option === "Study Resources") {
+    // Open YouTube links in new tabs
+    data.forEach(link => {
+      window.open(link, '_blank');
+    });
+  } else {
+    // For Notes, Quizzes, Games, show an alert or redirect as needed
+    alert(`${option}: ${data}`);
+  }
 }
