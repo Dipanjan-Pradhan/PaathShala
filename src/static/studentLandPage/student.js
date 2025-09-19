@@ -73,24 +73,24 @@ const chapterOptionsData = {
       "Term I": {
         "Chapter 1 - Looking for Vulture’s Egg": {
           "Study Resources": ["https://www.youtube.com/watch?v=example1", "https://www.youtube.com/watch?v=example2"],
-          "Notes": "Short notes on the chapter: This chapter is about...",
-          "Quizzes": "Quiz link or content here",
-          "Games": "Game link or description here"
+          "Notes": "https://example.com/notes/chapter1",
+          "Quizzes": "https://example.com/quizzes/chapter1",
+          "Games": "https://example.com/games/chapter1"
         },
         "Chapter 2 - The School Boy": {
           "Study Resources": ["https://www.youtube.com/watch?v=example3"],
-          "Notes": "Short notes: The poem discusses...",
-          "Quizzes": "Quiz content",
-          "Games": "Game content"
+          "Notes": "https://example.com/notes/chapter2",
+          "Quizzes": "https://example.com/quizzes/chapter2",
+          "Games": "https://example.com/games/chapter2"
         }
         // Add for other chapters
       },
       "Term II": {
         "Chapter 8 - Travel": {
           "Study Resources": ["https://www.youtube.com/watch?v=example4"],
-          "Notes": "Short notes on travel...",
-          "Quizzes": "Quiz",
-          "Games": "Game"
+          "Notes": "https://example.com/notes/chapter8",
+          "Quizzes": "https://example.com/quizzes/chapter8",
+          "Games": "https://example.com/games/chapter8"
         }
         // Add for other chapters
       }
@@ -237,13 +237,18 @@ function showChapterOptions(selectedClass, selectedSubject, selectedTerm, select
 }
 
 function handleOptionClick(option, data) {
-  if (option === "Study Resources") {
-    // Open YouTube links in new tabs
-    data.forEach(link => {
-      window.open(link, '_blank');
-    });
+  if (option === "Study Resources" || option === "Notes" || option === "Quizzes" || option === "Games") {
+    // Redirect to the link (for now using data as link, user can change later)
+    if (Array.isArray(data)) {
+      // If data is array (like Study Resources), open all links in new tabs
+      data.forEach(link => {
+        window.open(link, '_blank');
+      });
+    } else {
+      // For Notes, Quizzes, Games, treat data as a URL string for redirection
+      window.open(data, '_blank');
+    }
   } else {
-    // For Notes, Quizzes, Games, show an alert or redirect as needed
     alert(`${option}: ${data}`);
   }
 }
