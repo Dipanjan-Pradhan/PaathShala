@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Math Quiz - PaathShala</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/PaathShala.jpg">
+    <link rel="stylesheet" href="../static/Games_Info/game1.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Quick Math Quiz</h1>
+            <div class="score-display">
+                <span class="score">Score: <span id="score">0</span></span>
+                <span class="timer">Time: <span id="timer">10</span>s</span>
+            </div>
+        </header>
+
+        <div class="game-area">
+            <div class="question-card">
+                <div class="question" id="question">12 + 8 = ?</div>
+                <div class="input-container">
+                    <input type="number" id="answer" placeholder="Enter your answer" autofocus>
+                    <button id="submit-btn" class="submit-btn">Submit</button>
+                </div>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <div class="controls">
+                <button id="start-btn" class="control-btn start-btn">Start Game</button>
+                <button id="next-btn" class="control-btn next-btn" style="display: none;">Next Question</button>
+                <button id="restart-btn" class="control-btn restart-btn" style="display: none;">Play Again</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <h2>Game Complete!</h2>
+            <div class="stat-item">
+                <span class="stat-label">Final Score:</span>
+                <span class="stat-value" id="final-score">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Questions Answered:</span>
+                <span class="stat-value" id="questions-answered">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Correct Answers:</span>
+                <span class="stat-value" id="correct-answers">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Accuracy:</span>
+                <span class="stat-value" id="accuracy">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/Games_Info/game1.js"></script>
+</body>
+</html>
