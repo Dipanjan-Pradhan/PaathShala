@@ -1,13 +1,15 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 import uvicorn
 from database import get_db, engine, Base
-import schemas, crud, auth
+import schemas, crud, auth, models
 from pathlib import Path
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 
+# Ensure models are imported before table creation
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
@@ -15,6 +17,15 @@ app = FastAPI()
 BASE_DIR = Path(__file__).resolve().parent.parent
 app.mount("/assets", StaticFiles(directory=BASE_DIR / "assets" / "img"), name="assets")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
+
+# Enable CORS for frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/favicon.ico", include_in_schema=False)
@@ -47,8 +58,8 @@ def signup(
         name=name, mobile=mobile, email=email,
         password=password, confirm_password=confirm_password
     )
-    db_student = crud.create_student(db, student_data)
-    return f"<h2>Student created successfully!</h2><p>Use OTP: <b>{db_student.otp}</b> to verify.</p>"
+    crud.create_student(db, student_data)
+    return "<h2>Student created successfully!</h2><p>OTP sent for verification.</p>"
 
 # Verify OTP
 @app.get("/verify-otp", response_class=HTMLResponse)
@@ -83,8 +94,8 @@ def login(
     if not db_student.is_verified:
         raise HTTPException(status_code=400, detail="OTP not verified")
 
-    token = auth.create_access_token({"sub": db_student.mobile})
-    return f"<h2>🎉 Welcome {db_student.name}!</h2><p>Login successful. Token: <b>{token}</b></p>"
+    auth.create_access_token({"sub": db_student.mobile})
+    return f"<h2>🎉 Welcome {db_student.name}!</h2><p>Login successful.</p>"
 
 # Forgot Password - Send OTP
 @app.get("/forgot-password", response_class=HTMLResponse)
@@ -94,7 +105,7 @@ def forgot_password(mobile: str = Query(...), db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Student not found")
     student.otp = auth.generate_otp()
     db.commit()
-    return f"<h2>📩 OTP sent for password reset!</h2><p>Use OTP: <b>{student.otp}</b></p>"
+    return "<h2>📩 OTP sent for password reset!</h2>"
 
 # Reset Password
 @app.get("/reset-password", response_class=HTMLResponse)
@@ -126,9 +137,9 @@ def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Mobile already registered")
     if student.email and crud.get_student_by_email(db, student.email):
         raise HTTPException(status_code=400, detail="Email already registered")
-    db_student = crud.create_student(db, student)
+    crud.create_student(db, student)
     # Here you would send OTP via SMS in real app
-    return {"message": "Student created, OTP sent", "otp": db_student.otp}  # For testing, show OTP
+    return {"message": "Student created, OTP sent"}
 
 # Verify OTP
 @app.post("/verify-otp")
@@ -164,7 +175,7 @@ def forgot_password(mobile: str, db: Session = Depends(get_db)):
     student.otp = auth.generate_otp()
     db.commit()
     # Here you would send OTP via SMS in real app
-    return {"message": "OTP sent for password reset", "otp": student.otp}  # For testing
+    return {"message": "OTP sent for password reset"}
 
 # Reset Password
 @app.post("/reset-password")
@@ -176,6 +187,29 @@ def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid OTP")
     crud.update_password(db, data.mobile, data.new_password)
     return {"message": "Password reset successfully"}
+
+# Teacher Signup
+@app.post("/teacher/signup")
+def teacher_signup(teacher: schemas.TeacherCreate, db: Session = Depends(get_db)):
+    if teacher.password != teacher.confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match")
+    if crud.get_teacher_by_email(db, teacher.email):
+        raise HTTPException(status_code=400, detail="Email already registered")
+    crud.create_teacher(db, teacher)
+    return {"message": "Teacher created, OTP sent"}
+
+# Teacher Login
+@app.post("/teacher/login")
+def teacher_login(teacher: schemas.TeacherLogin, db: Session = Depends(get_db)):
+    db_teacher = crud.get_teacher_by_email(db, teacher.email)
+    if not db_teacher:
+        raise HTTPException(status_code=400, detail="Teacher not found")
+    if not auth.verify_password(teacher.password, db_teacher.hashed_password):
+        raise HTTPException(status_code=400, detail="Incorrect password")
+    if not db_teacher.is_verified:
+        raise HTTPException(status_code=400, detail="OTP not verified")
+    token = auth.create_access_token({"sub": db_teacher.email})
+    return {"access_token": token, "token_type": "bearer"}
 
 
 # Starting server
