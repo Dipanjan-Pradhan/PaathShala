@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:5000'; // Adjust if your backend runs on a different host/port
+const API_BASE_URL = 'http://127.0.0.1:3002';
 
 // Student Sign Up
 async function handleStudentSignup() {
@@ -20,8 +20,21 @@ async function handleStudentSignup() {
     return;
   }
 
-  // TODO: Add actual signup logic here (e.g., API call)
-  alert('Signup successful for ' + name + '. You can now login.');
+  try {
+    const res = await fetch(`${API_BASE_URL}/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, mobile, email: email || null, password, confirm_password: password })
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.detail || 'Signup failed');
+    }
+    alert('Signup successful. Please verify OTP sent to your number, then log in.');
+  } catch (err) {
+    alert(err.message);
+    return;
+  }
 
   // Clear the form
   document.getElementById('studentNameSignup').value = '';
@@ -49,8 +62,22 @@ async function handleStudentSignin() {
     return;
   }
 
-  // TODO: Add actual signin logic here (e.g., API call)
-  alert('Signin successful for ' + name + '.');
+  try {
+    const res = await fetch(`${API_BASE_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mobile, email: null, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.detail || 'Login failed');
+    }
+    // Save token and redirect
+    localStorage.setItem('PaathShala-token', data.access_token);
+    window.location.href = '/src/pages/student.html';
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 // Teacher Sign Up
@@ -73,8 +100,21 @@ async function handleTeacherSignup() {
     return;
   }
 
-  // TODO: Add actual signup logic here (e.g., API call)
-  alert('Signup successful for ' + email + '. You can now login.');
+  try {
+    const res = await fetch(`${API_BASE_URL}/teacher/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, confirm_password: password })
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.detail || 'Teacher signup failed');
+    }
+    alert('Signup successful. Please verify OTP sent to your email, then log in.');
+  } catch (err) {
+    alert(err.message);
+    return;
+  }
 
   // Clear the form
   document.getElementById('teacherNameSignup').value = '';
@@ -98,8 +138,21 @@ async function handleTeacherSignin() {
     return;
   }
 
-  // TODO: Add actual signin logic here (e.g., API call)
-  alert('Signin successful for ' + email + '.');
+  try {
+    const res = await fetch(`${API_BASE_URL}/teacher/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.detail || 'Login failed');
+    }
+    localStorage.setItem('PaathShala-token', data.access_token);
+    window.location.href = '/src/pages/profile.html';
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 // Guest Login
