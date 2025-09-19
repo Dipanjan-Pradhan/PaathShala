@@ -1,5 +1,9 @@
 /* Student Page Styles */
 
+html {
+  scroll-behavior: smooth;
+}
+
 .student-dashboard {
   text-align: center;
   padding: 50px 20px;

@@ -133,6 +133,9 @@ function loadSubjects(selectedClass) {
   chaptersSection.classList.add("hidden");
   chaptersList.innerHTML = "";
 
+  // Scroll to subject section after showing it
+  subjectSection.scrollIntoView({ behavior: "smooth" });
+
   if (subjectsByClass[selectedClass]) {
     subjectsByClass[selectedClass].forEach(sub => {
       const btn = document.createElement("button");
@@ -166,6 +169,10 @@ function loadTerms(selectedClass, selectedSubject) {
 
   subjectSection.classList.add("hidden");
   termSection.classList.remove("hidden");
+
+  // Scroll to term section after showing it
+  termSection.scrollIntoView({ behavior: "smooth" });
+
   // Keep chaptersSection visible to allow switching terms and viewing chapters
   // chaptersSection.classList.add("hidden");
   // chaptersList.innerHTML = "";
@@ -196,6 +203,9 @@ function showChapters(selectedClass, selectedSubject, selectedTerm) {
   // Keep termSection visible to allow switching terms
   // termSection.classList.add("hidden");
   chaptersSection.classList.remove("hidden");
+
+  // Scroll to chapters section after showing it
+  chaptersSection.scrollIntoView({ behavior: "smooth" });
 }
 
 function showChapterOptions(selectedClass, selectedSubject, selectedTerm, selectedChapter) {
@@ -229,6 +239,9 @@ function showChapterOptions(selectedClass, selectedSubject, selectedTerm, select
 
   chaptersSection.classList.add("hidden");
   chapterOptionsSection.classList.remove("hidden");
+
+  // Scroll to chapter options section after showing it
+  chapterOptionsSection.scrollIntoView({ behavior: "smooth" });
 
   backToChaptersBtn.onclick = () => {
     chapterOptionsSection.classList.add("hidden");
