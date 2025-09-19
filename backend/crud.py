@@ -1,75 +1,71 @@
 from sqlalchemy.orm import Session
-from typing import Optional
+from models import Teacher, Student
+from auth import hash_password
+import secrets
 
-from database import SessionLocal
-from models import Student, Teacher
-import auth
-import schemas
-
-
-def get_student_by_mobile(db: Session, mobile: str) -> Optional[Student]:
-    return db.query(Student).filter(Student.mobile == mobile).first()
-
-
-def get_student_by_email(db: Session, email: str) -> Optional[Student]:
-    return db.query(Student).filter(Student.email == email).first()
-
-
-def create_student(db: Session, student: schemas.StudentCreate) -> Student:
-    hashed_password = auth.hash_password(student.password)
-    db_student = Student(
-        name=student.name,
-        mobile=student.mobile,
-        email=student.email,
-        hashed_password=hashed_password,
-        is_verified=False,
+# ---------------------------
+# TEACHER CRUD
+# ---------------------------
+def create_teacher(db: Session, teacher_data):
+    code = secrets.token_hex(4)  # 8-character unique code
+    hashed_pw = hash_password(teacher_data.password)
+    teacher = Teacher(
+        name=teacher_data.name,
+        email=teacher_data.email,
+        hashed_password=hashed_pw,
+        code=code
     )
-    db.add(db_student)
+    db.add(teacher)
     db.commit()
-    db.refresh(db_student)
-    return db_student
+    db.refresh(teacher)
+    return teacher
 
 
-def update_password(db: Session, mobile: str, new_password: str) -> None:
-    student = get_student_by_mobile(db, mobile)
-    if not student:
-        return
-    student.hashed_password = auth.hash_password(new_password)
-    db.commit()
+def get_teacher_by_email(db: Session, email: str):
+    return db.query(Teacher).filter(Teacher.email == email).first()
 
 
-def update_student_profile(db: Session, current_mobile: str, name: str, mobile: str, email: str) -> Student:
-    student = get_student_by_mobile(db, current_mobile)
-    if not student:
-        return None
+def get_teacher_by_code(db: Session, code: str):
+    return db.query(Teacher).filter(Teacher.code == code).first()
 
-    # Update fields if provided
-    if name:
-        student.name = name
-    if mobile:
-        student.mobile = mobile
-    if email is not None:  # Allow empty string to clear email
-        student.email = email
 
+# ---------------------------
+# STUDENT CRUD
+# ---------------------------
+def create_student(db: Session, student_data):
+    hashed_pw = hash_password(student_data.password)
+    student = Student(
+        name=student_data.name,
+        mobile=student_data.mobile,
+        email=student_data.email,
+        hashed_password=hashed_pw,
+        teacher_code=student_data.teacher_code  # optional
+    )
+    db.add(student)
     db.commit()
     db.refresh(student)
     return student
 
 
-# Teacher helpers
-def get_teacher_by_email(db: Session, email: str) -> Optional[Teacher]:
-    return db.query(Teacher).filter(Teacher.email == email).first()
+def get_student_by_mobile(db: Session, mobile: str):
+    return db.query(Student).filter(Student.mobile == mobile).first()
 
 
-def create_teacher(db: Session, teacher: schemas.TeacherCreate) -> Teacher:
-    hashed_password = auth.hash_password(teacher.password)
-    db_teacher = Teacher(
-        name=teacher.name,
-        email=teacher.email,
-        hashed_password=hashed_password,
-        is_verified=False,
-    )
-    db.add(db_teacher)
-    db.commit()
-    db.refresh(db_teacher)
-    return db_teacher
+def get_student_by_email(db: Session, email: str):
+    return db.query(Student).filter(Student.email == email).first()
+
+
+def get_students_by_teacher_code(db: Session, code: str):
+    return db.query(Student).filter(Student.teacher_code == code).all()
+
+
+# ---------------------------
+# PASSWORD MANAGEMENT
+# ---------------------------
+def update_password(db: Session, mobile: str, new_password: str):
+    student = get_student_by_mobile(db, mobile)
+    if student:
+        student.hashed_password = hash_password(new_password)
+        db.commit()
+        db.refresh(student)
+    return student
