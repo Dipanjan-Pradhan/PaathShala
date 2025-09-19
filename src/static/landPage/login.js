@@ -1,5 +1,7 @@
 const API_BASE_URL = 'http://127.0.0.1:3002';
 
+// ---------------- STUDENT ----------------
+
 // Student Sign Up
 async function handleStudentSignup() {
   const name = document.getElementById('studentNameSignup').value.trim();
@@ -21,15 +23,20 @@ async function handleStudentSignup() {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/signup`, {
+    const res = await fetch(`${API_BASE_URL}/student/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, mobile, email: email || null, password, confirm_password: password })
+      body: JSON.stringify({
+        name,
+        mobile,
+        email: email || null,
+        password,
+        confirm_password: password,
+        teacher_code: null   // make sure backend gets this
+      })
     });
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.detail || 'Signup failed');
-    }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Signup failed');
     alert('Signup successful. Please verify OTP sent to your number, then log in.');
   } catch (err) {
     alert(err.message);
@@ -45,14 +52,9 @@ async function handleStudentSignup() {
 
 // Student Sign In
 async function handleStudentSignin() {
-  const name = document.getElementById('studentName').value.trim();
   const mobile = document.getElementById('studentMobile').value.trim();
   const password = document.getElementById('studentPasswordSignin').value.trim();
 
-  if (!name) {
-    alert('Please enter your name.');
-    return;
-  }
   if (!mobile || !/^\+?\d{10,15}$/.test(mobile)) {
     alert('Please enter a valid mobile number.');
     return;
@@ -63,16 +65,14 @@ async function handleStudentSignin() {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/login`, {
+    const res = await fetch(`${API_BASE_URL}/student/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mobile, email: null, password })
     });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.detail || 'Login failed');
-    }
-    // Save token and redirect
+    if (!res.ok) throw new Error(data.detail || 'Login failed');
+
     localStorage.setItem('PaathShala-token', data.access_token);
     window.location.href = '/student';
   } catch (err) {
@@ -80,12 +80,13 @@ async function handleStudentSignin() {
   }
 }
 
+// ---------------- TEACHER ----------------
+
 // Teacher Sign Up
 async function handleTeacherSignup() {
   const name = document.getElementById('teacherNameSignup').value.trim();
   const email = document.getElementById('teacherEmailSignup').value.trim();
   const password = document.getElementById('teacherPasswordSignup').value.trim();
-  const schoolCode = document.getElementById('schoolCodeSignup').value.trim();
 
   if (!name) {
     alert('Please enter your name.');
@@ -106,11 +107,10 @@ async function handleTeacherSignup() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password, confirm_password: password })
     });
-    if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.detail || 'Teacher signup failed');
-    }
-    alert('Signup successful. Please verify OTP sent to your email, then log in.');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Teacher signup failed');
+
+    alert(`Signup successful. Your teacher code: ${data.code}`);
   } catch (err) {
     alert(err.message);
     return;
@@ -120,14 +120,12 @@ async function handleTeacherSignup() {
   document.getElementById('teacherNameSignup').value = '';
   document.getElementById('teacherEmailSignup').value = '';
   document.getElementById('teacherPasswordSignup').value = '';
-  document.getElementById('schoolCodeSignup').value = '';
 }
 
 // Teacher Sign In
 async function handleTeacherSignin() {
   const email = document.getElementById('teacherEmailSignin').value.trim();
   const password = document.getElementById('teacherPasswordSignin').value.trim();
-  const schoolCode = document.getElementById('schoolCodeSignin').value.trim();
 
   if (!email) {
     alert('Please enter your email.');
@@ -145,15 +143,15 @@ async function handleTeacherSignin() {
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.detail || 'Login failed');
-    }
+    if (!res.ok) throw new Error(data.detail || 'Login failed');
+
     localStorage.setItem('PaathShala-token', data.access_token);
     window.location.href = '/profile';
   } catch (err) {
     alert(err.message);
   }
 }
+
 
 // Guest Login
 function handleGuestLogin() {
