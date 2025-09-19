@@ -1,41 +1,35 @@
-from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi import FastAPI, Query, Depends, HTTPException
 from sqlalchemy.orm import Session
 import uvicorn
+import webbrowser
+
 from database import get_db, engine, Base
-import schemas, crud, auth, models
+import schemas, crud, auth
 from pathlib import Path
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 
-
-# Ensure models are imported before table creation
+# Initialize DB
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # Serving static files
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(_file_).resolve().parent.parent
 app.mount("/assets", StaticFiles(directory=BASE_DIR / "assets" / "img"), name="assets")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "src" / "static"), name="static")
-
-# Enable CORS for frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     return FileResponse(BASE_DIR / "assets" / "img" / "PaathShala.jpg")
-      
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
-    html_path = Path(__file__).parent.parent / "src" / "pages" / "index.html"
+    html_path = Path(_file_).parent.parent / "src" / "pages" / "index.html"
     return html_path.read_text(encoding="utf-8")
+
+# -------------------
+# AUTHENTICATION APIs (GET version)
+# -------------------
 
 # Signup - New Student
 @app.get("/signup", response_class=HTMLResponse)
@@ -59,19 +53,10 @@ def signup(
         password=password, confirm_password=confirm_password
     )
     crud.create_student(db, student_data)
-    return "<h2>Student created successfully!</h2><p>OTP sent for verification.</p>"
-
-# Verify OTP
-@app.get("/verify-otp", response_class=HTMLResponse)
-def verify_otp(
-    mobile: str = Query(...),
-    otp: str = Query(...),
-    db: Session = Depends(get_db)
-):
-    student = crud.verify_otp(db, mobile, otp)
-    if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    return "<h2>✅ OTP verified successfully! You can now log in.</h2>"
+    
+    # Redirect to student page
+    html_path = Path(_file_).parent.parent / "src" / "pages" / "student.html"
+    return html_path.read_text(encoding="utf-8")
 
 # Login
 @app.get("/login", response_class=HTMLResponse)
@@ -91,131 +76,35 @@ def login(
         raise HTTPException(status_code=400, detail="Student not found")
     if not auth.verify_password(password, db_student.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect password")
-    if not db_student.is_verified:
-        raise HTTPException(status_code=400, detail="OTP not verified")
 
-    auth.create_access_token({"sub": db_student.mobile})
-    return f"<h2>🎉 Welcome {db_student.name}!</h2><p>Login successful.</p>"
+    # Redirect to student page
+    html_path = Path(_file_).parent.parent / "src" / "pages" / "student.html"
+    return html_path.read_text(encoding="utf-8")
 
-# Forgot Password - Send OTP
-@app.get("/forgot-password", response_class=HTMLResponse)
-def forgot_password(mobile: str = Query(...), db: Session = Depends(get_db)):
-    student = crud.get_student_by_mobile(db, mobile)
-    if not student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    student.otp = auth.generate_otp()
-    db.commit()
-    return "<h2>📩 OTP sent for password reset!</h2>"
-
-# Reset Password
+# Forgot Password - Direct Reset (no OTP)
 @app.get("/reset-password", response_class=HTMLResponse)
 def reset_password(
     mobile: str = Query(...),
-    otp: str = Query(...),
     new_password: str = Query(...),
     confirm_password: str = Query(...),
     db: Session = Depends(get_db)
 ):
     if new_password != confirm_password:
         raise HTTPException(status_code=400, detail="Passwords do not match")
-    student = crud.verify_otp(db, mobile, otp)
+    student = crud.get_student_by_mobile(db, mobile)
     if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
+        raise HTTPException(status_code=400, detail="Student not found")
     crud.update_password(db, mobile, new_password)
     return "<h2>✅ Password reset successfully! Please log in again.</h2>"
 
 # -------------------
-# AUTHENTICATION APIs
+# START SERVER
 # -------------------
-
-# Signup - New Student
-@app.post("/signup")
-def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
-    if student.password != student.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    if crud.get_student_by_mobile(db, student.mobile):
-        raise HTTPException(status_code=400, detail="Mobile already registered")
-    if student.email and crud.get_student_by_email(db, student.email):
-        raise HTTPException(status_code=400, detail="Email already registered")
-    crud.create_student(db, student)
-    # Here you would send OTP via SMS in real app
-    return {"message": "Student created, OTP sent"}
-
-# Verify OTP
-@app.post("/verify-otp")
-def verify_otp(data: schemas.OTPVerification, db: Session = Depends(get_db)):
-    student = crud.verify_otp(db, data.mobile, data.otp)
-    if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    return {"message": "OTP verified successfully"}
-
-# Login
-@app.post("/login")
-def login(student: schemas.StudentLogin, db: Session = Depends(get_db)):
-    db_student = None
-    if student.mobile:
-        db_student = crud.get_student_by_mobile(db, student.mobile)
-    elif student.email:
-        db_student = crud.get_student_by_email(db, student.email)
-    if not db_student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    if not auth.verify_password(student.password, db_student.hashed_password):
-        raise HTTPException(status_code=400, detail="Incorrect password")
-    if not db_student.is_verified:
-        raise HTTPException(status_code=400, detail="OTP not verified")
-    token = auth.create_access_token({"sub": db_student.mobile})
-    return {"access_token": token, "token_type": "bearer"}
-
-# Forgot Password - Send OTP
-@app.post("/forgot-password")
-def forgot_password(mobile: str, db: Session = Depends(get_db)):
-    student = crud.get_student_by_mobile(db, mobile)
-    if not student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    student.otp = auth.generate_otp()
-    db.commit()
-    # Here you would send OTP via SMS in real app
-    return {"message": "OTP sent for password reset"}
-
-# Reset Password
-@app.post("/reset-password")
-def reset_password(data: schemas.ResetPassword, db: Session = Depends(get_db)):
-    if data.new_password != data.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    student = crud.verify_otp(db, data.mobile, data.otp)
-    if not student:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
-    crud.update_password(db, data.mobile, data.new_password)
-    return {"message": "Password reset successfully"}
-
-# Teacher Signup
-@app.post("/teacher/signup")
-def teacher_signup(teacher: schemas.TeacherCreate, db: Session = Depends(get_db)):
-    if teacher.password != teacher.confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    if crud.get_teacher_by_email(db, teacher.email):
-        raise HTTPException(status_code=400, detail="Email already registered")
-    crud.create_teacher(db, teacher)
-    return {"message": "Teacher created, OTP sent"}
-
-# Teacher Login
-@app.post("/teacher/login")
-def teacher_login(teacher: schemas.TeacherLogin, db: Session = Depends(get_db)):
-    db_teacher = crud.get_teacher_by_email(db, teacher.email)
-    if not db_teacher:
-        raise HTTPException(status_code=400, detail="Teacher not found")
-    if not auth.verify_password(teacher.password, db_teacher.hashed_password):
-        raise HTTPException(status_code=400, detail="Incorrect password")
-    if not db_teacher.is_verified:
-        raise HTTPException(status_code=400, detail="OTP not verified")
-    token = auth.create_access_token({"sub": db_teacher.email})
-    return {"access_token": token, "token_type": "bearer"}
-
-
-# Starting server
 def main():
-    print("Hello")
-    uvicorn.run(app, host='127.0.0.1', port=3002)
+    url = "http://127.0.0.1:3002"
+    print(f"🚀 Server running at {url}")
+    webbrowser.open(url)  # Auto-open browser
+    uvicorn.run(app, host="127.0.0.1", port=3002)
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
