@@ -105,13 +105,13 @@ const chapterOptionsData = {
     "English": {
       "Term I": {
         "Chapter 1 - Looking for Vulture’s Egg": {
-          "Study Videos": ["https://youtu.be/Uu3bS5Wo4Bg?si=q8ah_ZBq5FaZA7q5", "https://youtu.be/zwOrCNbWAXQ?si=aCI3DoRt_oMLEotW"],
+          "Study Resources": ["https://youtu.be/Uu3bS5Wo4Bg?si=q8ah_ZBq5FaZA7q5"],
           "Notes": "https://drive.google.com/file/d/1FmGj_auruXs3WehfuzGlu-WrRM4slZe1/view?usp=drivesdk",
           "Quizzes": "https://example.com/quizzes/chapter1",
           "Games": "https://example.com/games/chapter1"
         },
         "Chapter 2 - The School Boy": {
-          "Study Videos": ["https://youtu.be/XPeAhNTOeAU?si=Ws4NrxJeaxlJ-0tv", "https://youtu.be/kKClC_FV8mY?si=tX-PC6INNnCI05Cy"],
+          "Study Resources": ["https://youtu.be/XPeAhNTOeAU?si=Ws4NrxJeaxlJ-0tv"],
           "Notes": "https://drive.google.com/file/d/1VFuToc2HSpWaS4DvI3NKNngBRbbUXOLz/view?usp=drivesdk",
           "Quizzes": "https://example.com/quizzes/chapter2",
           "Games": "https://example.com/games/chapter2"
@@ -120,7 +120,7 @@ const chapterOptionsData = {
       },
       "Term II": {
         "Chapter 8 - Travel": {
-          "Study Videos": ["https://www.youtube.com/watch?v=example4"],
+          "Study Resources": ["https://www.youtube.com/watch?v=example4"],
           "Notes": "https://example.com/notes/chapter8",
           "Quizzes": "https://example.com/quizzes/chapter8",
           "Games": "https://example.com/games/chapter8"
@@ -133,13 +133,13 @@ const chapterOptionsData = {
     "Odia": {
       "Term I": {
         "ଆଶା": {
-          "Study Videos": ["https://www.youtube.com/watch?v=odia1"],
+          "Study Resources": ["https://www.youtube.com/watch?v=odia1"],
           "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
           "Quizzes": "https://example.com/quizzes/odia1",
           "Games": "https://example.com/games/odia1"
         },
         "କଳାହାନ୍ତିର ମହିଳା": {
-          "Study Videos": ["https://www.youtube.com/watch?v=odia2"],
+          "Study Resources": ["https://www.youtube.com/watch?v=odia2"],
           "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
           "Quizzes": "https://example.com/quizzes/odia2",
           "Games": "https://example.com/games/odia2"
@@ -148,13 +148,13 @@ const chapterOptionsData = {
       },
       "Term II": {
         "ମହାତ୍ମା ଗାନ୍ଧୀଙ୍କ ଆଶା": {
-          "Study Videos": ["https://www.youtube.com/watch?v=odia3"],
+          "Study Resources": ["https://www.youtube.com/watch?v=odia3"],
           "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
           "Quizzes": "https://example.com/quizzes/odia3",
           "Games": "https://example.com/games/odia3"
         },
         "କଳାହାନ୍ତିର କଥା": {
-          "Study Videos": ["https://www.youtube.com/watch?v=odia4"],
+          "Study Resources": ["https://www.youtube.com/watch?v=odia4"],
           "Notes": "https://docs.google.com/document/d/1r7vrcIiVVyPKJtNVc92-xKCUWvkXJgyup5AoPtoiVBM/edit?usp=sharing",
           "Quizzes": "https://example.com/quizzes/odia4",
           "Games": "https://example.com/games/odia4"
