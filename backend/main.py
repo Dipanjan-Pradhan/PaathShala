@@ -55,7 +55,7 @@ def signup(
     crud.create_student(db, student_data)
     
     # Redirect to student page
-    html_path = BASE_DIR / "src" / "pages" / "student.html"
+    html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
     return html_path.read_text(encoding="utf-8")
 
 # Login
@@ -78,7 +78,7 @@ def login(
         raise HTTPException(status_code=400, detail="Incorrect password")
 
     # Redirect to student page
-    html_path = BASE_DIR / "src" / "pages" / "student.html"
+    html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
     return html_path.read_text(encoding="utf-8")
 
 # Forgot Password - Direct Reset (no OTP)
