@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query, Depends, HTTPException
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 import uvicorn
 import webbrowser
@@ -27,12 +28,27 @@ async def root():
     html_path = BASE_DIR / "src" / "pages" / "index.html"
     return html_path.read_text(encoding="utf-8")
 
+@app.get("/student", response_class=HTMLResponse)
+async def root():
+    html_path = BASE_DIR / "src" / "pages" / "student.html"
+    return html_path.read_text(encoding="utf-8")
+
+@app.get("/profile", response_class=HTMLResponse)
+async def root():
+    html_path = BASE_DIR / "src" / "pages" / "profile.html"
+    return html_path.read_text(encoding="utf-8")
+
+@app.get("/game", response_class=HTMLResponse)
+async def root():
+    html_path = BASE_DIR / "src" / "pages" / "game1.html"
+    return html_path.read_text(encoding="utf-8")
+
 # -------------------
 # AUTHENTICATION APIs (GET version)
 # -------------------
 
 # Signup - New Student
-@app.get("/signup", response_class=HTMLResponse)
+@app.post("/signup", response_class=HTMLResponse)
 def signup(
     name: str = Query(...),
     mobile: str = Query(...),
@@ -54,12 +70,11 @@ def signup(
     )
     crud.create_student(db, student_data)
     
-    # Redirect to student page
-    html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
-    return html_path.read_text(encoding="utf-8")
+    # Redirect to /student route
+    return RedirectResponse(url="/student")
 
 # Login
-@app.get("/login", response_class=HTMLResponse)
+@app.post("/login", response_class=HTMLResponse)
 def login(
     mobile: str | None = Query(None),
     email: str | None = Query(None),
@@ -77,25 +92,8 @@ def login(
     if not auth.verify_password(password, db_student.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect password")
 
-    # Redirect to student page
-    html_path = Path(__file__).parent.parent / "src" / "pages" / "student.html"
-    return html_path.read_text(encoding="utf-8")
-
-# Forgot Password - Direct Reset (no OTP)
-@app.get("/reset-password", response_class=HTMLResponse)
-def reset_password(
-    mobile: str = Query(...),
-    new_password: str = Query(...),
-    confirm_password: str = Query(...),
-    db: Session = Depends(get_db)
-):
-    if new_password != confirm_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-    student = crud.get_student_by_mobile(db, mobile)
-    if not student:
-        raise HTTPException(status_code=400, detail="Student not found")
-    crud.update_password(db, mobile, new_password)
-    return "<h2>✅ Password reset successfully! Please log in again.</h2>"
+    # Redirect to /student route
+    return RedirectResponse(url="/student")
 
 # -------------------
 # START SERVER
