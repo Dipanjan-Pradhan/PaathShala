@@ -103,7 +103,6 @@ def reset_password(
 def main():
     url = "http://127.0.0.1:3002"
     print(f"🚀 Server running at {url}")
-    webbrowser.open(url)  # Auto-open browser
     uvicorn.run(app, host="127.0.0.1", port=3002)
 
 if __name__ == "__main__":
