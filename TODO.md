@@ -1,0 +1,3 @@
+- [ ] Update src/pages/index.html to add Sign In / Sign Up toggles for student and teacher forms, and adjust fields accordingly.
+- [ ] Update src/static/landPage/login.js to handle toggles and different submission logic for signin vs signup.
+- [ ] Test the forms to ensure toggles work and submissions are handled correctly.

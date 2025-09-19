@@ -159,48 +159,87 @@
             
             <!-- Student Login Form -->
             <div class="login-form active" id="studentForm">
-                <div class="form-group">
-                    <label for="studentName">Name</label>
-                    <input type="text" id="studentName" placeholder="Enter your name" required>
+                <div class="form-toggle">
+                    <button class="toggle-btn active" data-mode="signin" onclick="toggleStudentMode('signin')" data-translate="login.signin">Sign In</button>
+                    <button class="toggle-btn" data-mode="signup" onclick="toggleStudentMode('signup')" data-translate="login.signup">Sign Up</button>
                 </div>
-                <div class="form-group">
-                    <label for="studentMobile">Mobile Number</label>
-                    <input type="text" id="studentMobile" placeholder="Enter your mobile number" required>
+                <div class="signin-fields">
+                    <div class="form-group">
+                        <label for="studentName">Name</label>
+                        <input type="text" id="studentName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentMobile">Mobile Number</label>
+                        <input type="text" id="studentMobile" placeholder="Enter your mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPasswordSignin">Password</label>
+                        <input type="password" id="studentPasswordSignin" placeholder="Enter your password" required>
+                    </div>
+                    <button class="login-submit-btn" onclick="handleStudentSignin()" data-translate="login.student_signin">Sign In as Student</button>
                 </div>
-                <div class="form-group">
-                    <label for="studentEmail">Email (Optional)</label>
-                    <input type="email" id="studentEmail" placeholder="Enter your email">
+                <div class="signup-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="studentNameSignup">Name</label>
+                        <input type="text" id="studentNameSignup" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentMobileSignup">Mobile Number</label>
+                        <input type="text" id="studentMobileSignup" placeholder="Enter your mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentEmailSignup">Email</label>
+                        <input type="email" id="studentEmailSignup" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPasswordSignup">Password</label>
+                        <input type="password" id="studentPasswordSignup" placeholder="Enter your password" required>
+                    </div>
+                    <button class="login-submit-btn" onclick="handleStudentSignup()" data-translate="login.student_submit">Sign Up as Student</button>
                 </div>
-                <button class="login-submit-btn" onclick="handleStudentSignup()" data-translate="login.student_submit">Sign Up as Student</button>
                 <button class="guest-btn" onclick="handleGuestLogin()" data-translate="login.guest">Try as Guest</button>
             </div>
             
-            <!-- OTP Verification Form
-            <div class="login-form" id="otpForm" style="display:none;">
-                <div class="form-group">
-                    <label for="otpInput">Enter OTP</label>
-                    <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6" required>
-                </div>
-                <button class="login-submit-btn" onclick="handleOtpVerification()">Verify OTP</button>
-                <button class="guest-btn" onclick="cancelOtpVerification()">Cancel</button>
-                <p id="otpError" style="color:red; display:none;"></p>
-            </div> -->
-            
             <!-- Teacher Login Form -->
             <div class="login-form" id="teacherForm">
-                <div class="form-group">
-                    <label for="teacherEmail" data-translate="login.email">Email</label>
-                    <input type="email" id="teacherEmail" placeholder="Enter your email">
+                <div class="form-toggle">
+                    <button class="toggle-btn active" data-mode="signin" onclick="toggleTeacherMode('signin')" data-translate="login.signin">Sign In</button>
+                    <button class="toggle-btn" data-mode="signup" onclick="toggleTeacherMode('signup')" data-translate="login.signup">Sign Up</button>
                 </div>
-                <div class="form-group">
-                    <label for="teacherPassword" data-translate="login.password">Password</label>
-                    <input type="password" id="teacherPassword" placeholder="Enter your password">
+                <div class="signin-fields">
+                    <div class="form-group">
+                        <label for="teacherEmailSignin" data-translate="login.email">Email</label>
+                        <input type="email" id="teacherEmailSignin" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherPasswordSignin" data-translate="login.password">Password</label>
+                        <input type="password" id="teacherPasswordSignin" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolCodeSignin" data-translate="login.school_code">School Code (Optional)</label>
+                        <input type="text" id="schoolCodeSignin" placeholder="Enter school code">
+                    </div>
+                    <button class="login-submit-btn" onclick="handleTeacherSignin()" data-translate="login.teacher_signin">Sign In as Teacher</button>
                 </div>
-                <div class="form-group">
-                    <label for="schoolCode" data-translate="login.school_code">School Code (Optional)</label>
-                    <input type="text" id="schoolCode" placeholder="Enter school code">
+                <div class="signup-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="teacherNameSignup">Name</label>
+                        <input type="text" id="teacherNameSignup" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherEmailSignup" data-translate="login.email">Email</label>
+                        <input type="email" id="teacherEmailSignup" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherPasswordSignup" data-translate="login.password">Password</label>
+                        <input type="password" id="teacherPasswordSignup" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schoolCodeSignup" data-translate="login.school_code">School Code (Optional)</label>
+                        <input type="text" id="schoolCodeSignup" placeholder="Enter school code">
+                    </div>
+                    <button class="login-submit-btn" onclick="handleTeacherSignup()" data-translate="login.teacher_submit">Sign Up as Teacher</button>
                 </div>
-                <button class="login-submit-btn" onclick="handleTeacherLogin()" data-translate="login.teacher_submit">Login as Teacher</button>
             </div>
         </div>
     </section>
