@@ -279,6 +279,50 @@ const chapterOptionsData = {
         // Add for other chapters
       }
     }
+  },
+  6: {
+    "Mathematics": {
+      "Term I": {
+        "Chapter 1: Numbers": {
+          "Study Resources": ["https://example.com/study/numbers"],
+          "Notes": "https://example.com/notes/numbers",
+          "Quizzes": "https://example.com/quizzes/numbers",
+          "Games": "/game1"
+        },
+        "Chapter 2: Geometry": {
+          "Study Resources": ["https://example.com/study/geometry"],
+          "Notes": "https://example.com/notes/geometry",
+          "Quizzes": "https://example.com/quizzes/geometry",
+          "Games": "/game1"
+        },
+        "Chapter 3: Algebra Basics": {
+          "Study Resources": ["https://example.com/study/algebra"],
+          "Notes": "https://example.com/notes/algebra",
+          "Quizzes": "https://example.com/quizzes/algebra",
+          "Games": "/game1"
+        }
+      },
+      "Term II": {
+        "Chapter 4: Fractions": {
+          "Study Resources": ["https://example.com/study/fractions"],
+          "Notes": "https://example.com/notes/fractions",
+          "Quizzes": "https://example.com/quizzes/fractions",
+          "Games": "/game1"
+        },
+        "Chapter 5: Decimals": {
+          "Study Resources": ["https://example.com/study/decimals"],
+          "Notes": "https://example.com/notes/decimals",
+          "Quizzes": "https://example.com/quizzes/decimals",
+          "Games": "/game1"
+        },
+        "Chapter 6: Data Handling": {
+          "Study Resources": ["https://example.com/study/data"],
+          "Notes": "https://example.com/notes/data",
+          "Quizzes": "https://example.com/quizzes/data",
+          "Games": "/game1"
+        }
+      }
+    }
   }
   // Add for other classes/subjects
 };
