@@ -60,6 +60,11 @@ async def game_page():
     html_path = BASE_DIR / "src" / "pages" / "game1.html"
     return html_path.read_text(encoding="utf-8")
 
+@app.get("/teacher", response_class=HTMLResponse)
+async def teacher_page():
+    html_path = BASE_DIR / "src" / "pages" / "teacher.html"
+    return html_path.read_text(encoding="utf-8")
+
 # -------------------
 # STUDENT AUTH APIs
 # -------------------
@@ -73,8 +78,6 @@ def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
         return JSONResponse({"success": False, "detail": "Email already registered"}, status_code=400)
 
     # hash the password before saving
-    student.password = hash_password(student.password)
-    student.confirm_password = student.password
     crud.create_student(db, student)
 
     return JSONResponse({"success": True, "redirect": "/student"})
@@ -155,30 +158,23 @@ def get_teacher_for_student(mobile: str, db: Session = Depends(get_db)):
 
 # Get Student Profile
 @app.get("/student/profile")
-def get_student_profile(mobile: str, db: Session = Depends(get_db), current_user: str = Depends(auth.get_current_user)):
+def get_student_profile(mobile: str, db: Session = Depends(get_db)):
     student = crud.get_student_by_mobile(db, mobile)
     if not student:
         return JSONResponse({"success": False, "detail": "Student not found"}, status_code=404)
 
-    return JSONResponse({
-        "success": True,
-        "data": {
-            "id": student.id,
-            "name": student.name,
-            "mobile": student.mobile,
-            "email": student.email,
-            "profile_picture": None,  # TODO: Add profile picture field to database
-            "is_verified": student.is_verified
-        }
-    })
+    return {
+        "id": student.id,
+        "name": student.name,
+        "mobile": student.mobile,
+        "email": student.email,
+        "profile_picture": None,  # TODO: Add profile picture field to database
+        "is_verified": student.is_verified
+    }
 
 # Update Student Profile
 @app.put("/student/profile")
-def update_student_profile(
-    profile_data: dict,
-    db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user)
-):
+def update_student_profile(profile_data: dict, db: Session = Depends(get_db)):
     current_mobile = profile_data.get("current_mobile")
     name = profile_data.get("name")
     mobile = profile_data.get("mobile")
@@ -203,7 +199,7 @@ def update_student_profile(
     # Update student data
     updated_student = crud.update_student_profile(db, current_mobile, name, mobile, email)
 
-    return JSONResponse({
+    return {
         "success": True,
         "detail": "Profile updated successfully",
         "data": {
@@ -212,29 +208,22 @@ def update_student_profile(
             "mobile": updated_student.mobile,
             "email": updated_student.email
         }
-    })
+    }
 
 # Upload Profile Picture
 @app.post("/student/upload-picture")
-def upload_profile_picture(
-    db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user)
-):
+def upload_profile_picture(db: Session = Depends(get_db)):
     # TODO: Implement file upload logic
     # For now, return success with a placeholder
-    return JSONResponse({
+    return {
         "success": True,
         "detail": "Profile picture uploaded successfully",
         "image_url": "/assets/profile-placeholder.png"
-    })
+    }
 
 # Change Password
 @app.put("/student/change-password")
-def change_student_password(
-    password_data: dict,
-    db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user)
-):
+def change_student_password(password_data: dict, db: Session = Depends(get_db)):
     mobile = password_data.get("mobile")
     current_password = password_data.get("current_password")
     new_password = password_data.get("new_password")
@@ -248,13 +237,13 @@ def change_student_password(
         return JSONResponse({"success": False, "detail": "Student not found"}, status_code=404)
 
     # Verify current password
-    if not auth.verify_password(current_password, student.hashed_password):
+    if not verify_password(current_password, student.hashed_password):
         return JSONResponse({"success": False, "detail": "Current password is incorrect"}, status_code=400)
 
     # Update password
-    crud.update_password(db, mobile, new_password)
+    crud.update_password(db, mobile, hash_password(new_password))
 
-    return JSONResponse({"success": True, "detail": "Password changed successfully"})
+    return {"success": True, "detail": "Password changed successfully"}
 
 # -------------------
 # START SERVER

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../static/teacherLandPage/teacher.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top-left">
+                <img src="../../assets/PaathShala.jpg" alt="PaathShala Logo" class="header-logo" />
+                <span class="header-logo-text">PaathShala</span>
+            </div>
+            <h1>Teacher Dashboard</h1>
+            <p class="subtitle">Manage your classes and students with ease</p>
+            <div class="header-profile">
+                <img src="https://i.pravatar.cc/150?img=12" alt="Profile Picture" />
+            </div>
+        </header>
+        <div class="classes-grid">
+            <div class="class-card" data-class="6">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 6</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-pencil-alt"></i></div>
+                    <span class="student-count">32 Students</span>
+                </div>
+            </div>
+            <div class="class-card" data-class="7">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 7</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-calculator"></i></div>
+                    <span class="student-count">35 Students</span>
+                </div>
+            </div>
+            <!-- Add more class cards as needed... -->
+        </div>
+        <div class="students-container" id="studentsContainer">
+            <div class="students-header">
+                <h3 class="students-title">Students in Class <span id="selectedClass">6</span></h3>
+                <button class="close-btn" id="closeStudents"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="students-list" id="studentsList">
+                <table class="student-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>ID</th>
+                            <th>Mobile Number</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+        <footer>
+            <p>Teacher Dashboard &copy; 2023. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="../static/teacherLandPage/teacher.js"></script>
+</body>
+</html>

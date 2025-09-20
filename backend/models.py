@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -10,6 +10,7 @@ class Student(Base):
     mobile = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=True)
     hashed_password = Column(String, nullable=False)
+    is_verified = Column(Boolean, default=False)
 
     # NEW: link to Teacher via code
     teacher_code = Column(String, ForeignKey("teachers.code"), nullable=True)
