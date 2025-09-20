@@ -32,12 +32,22 @@ async function handleStudentSignup() {
         email: email || null,
         password,
         confirm_password: password,
-        teacher_code: null   // make sure backend gets this
+        teacher_code: null
       })
     });
+
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Signup failed');
+
+    // Save token and login data
     localStorage.setItem('PaathShala-token', data.access_token);
+    localStorage.setItem('studentLoginData', JSON.stringify({
+        id: data.id,
+        name: data.name,
+        mobile: data.mobile,
+        email: data.email
+    }));
+
     window.location.href = '/student';
   } catch (err) {
     alert(err.message);
@@ -71,15 +81,19 @@ async function handleStudentSignin() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mobile, email: null, password })
     });
+
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Login failed');
 
-    localStorage.setItem('PaathShala-token', data.access_token);
+    // ✅ Save login data correctly from backend response
     localStorage.setItem('studentLoginData', JSON.stringify({
-        name: name,
-        mobile: mobile,
-        email: null // Email not provided in login
+        id: data.id,
+        name: data.name,
+        mobile: data.mobile,
+        email: data.email
     }));
+    localStorage.setItem('PaathShala-token', data.access_token);
+
     window.location.href = '/student';
   } catch (err) {
     alert(err.message);
@@ -153,19 +167,25 @@ async function handleTeacherSignin() {
     if (!res.ok) throw new Error(data.detail || 'Login failed');
 
     localStorage.setItem('PaathShala-token', data.access_token);
+    localStorage.setItem('teacherLoginData', JSON.stringify({
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        code: data.code
+    }));
     window.location.href = '/profile';
   } catch (err) {
     alert(err.message);
   }
 }
 
-
-// Guest Login
+// Guest Login (placeholder)
 function handleGuestLogin() {
   alert('Guest login functionality not implemented yet.');
 }
 
-// Toggle Student Mode
+// ---------------- UI Helpers ----------------
+
 function toggleStudentMode(mode) {
   const signinFields = document.querySelector('#studentForm .signin-fields');
   const signupFields = document.querySelector('#studentForm .signup-fields');
@@ -185,7 +205,6 @@ function toggleStudentMode(mode) {
   }
 }
 
-// Toggle Teacher Mode
 function toggleTeacherMode(mode) {
   const signinFields = document.querySelector('#teacherForm .signin-fields');
   const signupFields = document.querySelector('#teacherForm .signup-fields');
@@ -205,19 +224,6 @@ function toggleTeacherMode(mode) {
   }
 }
 
-// Placeholder functions for other login handlers
-function handleStudentLogin() {
-  alert('Student login functionality not implemented yet.');
-}
-
-function handleTeacherLogin() {
-  alert('Teacher login functionality not implemented yet.');
-}
-
-function handleGuestLogin() {
-  alert('Guest login functionality not implemented yet.');
-}
-
 function togglePasswordVisibility(icon) {
     const input = icon.previousElementSibling;
     if (input.type === "password") {
@@ -228,4 +234,3 @@ function togglePasswordVisibility(icon) {
         icon.src = "../../assets/show.svg";
     }
 }
-
