@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teacher Profile - Persistent Unique Code</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #7209b7;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .profile-container {
+      background: white;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px 40px;
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+    .profile-picture-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 25px;
+    }
+    .profile-picture {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    }
+    .upload-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--primary);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      border: 2px solid white;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+    .upload-btn:hover {
+      background: var(--accent);
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--primary);
+      text-align: left;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    .profile-info {
+      font-size: 1.1rem;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .profile-info i {
+      color: var(--primary);
+      font-size: 1.3rem;
+      min-width: 20px;
+      text-align: center;
+    }
+    .login-code {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--light);
+      padding: 12px 20px;
+      border-radius: 30px;
+      display: inline-block;
+      letter-spacing: 2px;
+      user-select: all;
+      box-shadow: 0 2px 8px rgba(114, 9, 183, 0.3);
+      margin-top: 30px;
+      text-align: center;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      word-break: break-word;
+    }
+    button.save-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      display: block;
+      margin: 20px auto 0;
+    }
+    button.save-btn:hover {
+      background: var(--accent);
+    }
+    .error-message {
+      color: #f50101;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: none;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+</head>
+<body>
+  <main class="profile-container" role="main" aria-label="Editable Teacher Profile Section">
+    <div class="profile-picture-wrapper">
+      <img
+        src="https://randomuser.me/api/portraits/women/44.jpg"
+        alt="Profile picture of Jane Doe"
+        class="profile-picture"
+        id="profilePicture"
+      />
+      <label for="uploadInput" class="upload-btn" title="Change Profile Picture" tabindex="0">
+        <i class="fas fa-camera"></i>
+      </label>
+      <input
+        type="file"
+        id="uploadInput"
+        accept="image/*"
+        style="display:none"
+        aria-label="Upload profile picture"
+      />
+    </div>
+
+    <form id="profileForm" novalidate>
+      <div class="error-message" id="errorMessage" role="alert"></div>
+
+      <label for="teacherName">Name</label>
+      <input type="text" id="teacherName" name="teacherName" value="" required />
+
+      <div class="profile-info" aria-label="Mobile Number">
+        <i class="fas fa-phone" aria-hidden="true"></i>
+        <span>+1 (555) 123-4567</span>
+      </div>
+      <div class="profile-info" aria-label="Gmail Address">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        <a href="mailto:jane.doe@example.com" style="color: var(--secondary); text-decoration: none;">jane.doe@example.com</a>
+      </div>
+
+      <div class="login-code" tabindex="0" aria-label="Unique login code" id="loginCode">
+        <!-- Unique code will appear here -->
+      </div>
+
+      <button type="submit" class="save-btn" aria-label="Save profile changes">Save Changes</button>
+    </form>
+  </main>
+
+  <script>
+    const uploadInput = document.getElementById("uploadInput");
+    const profilePicture = document.getElementById("profilePicture");
+    const profileForm = document.getElementById("profileForm");
+    const errorMessage = document.getElementById("errorMessage");
+    const loginCodeEl = document.getElementById("loginCode");
+    const teacherNameInput = document.getElementById("teacherName");
+
+    // Max file size in bytes (200 KB)
+    const MAX_FILE_SIZE = 200 * 1024;
+
+    // LocalStorage keys
+    const STORAGE_KEYS = {
+      name: "teacherProfileName",
+      photo: "teacherProfilePhoto",
+      code: "teacherUniqueCode",
+    };
+
+    // Generate a unique login code (persistent)
+    function generateUniqueCode() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const randomLetters = (length) =>
+        Array.from({ length }, () => letters.charAt(Math.floor(Math.random() * letters.length))).join("");
+      const randomDigits = (length) =>
+        Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+
+      return `${randomLetters(3)}-${randomDigits(4)}-${randomLetters(1)}`;
+    }
+
+    // Load profile data from localStorage or initialize
+    function loadProfile() {
+      // Load name
+      const savedName = localStorage.getItem(STORAGE_KEYS.name);
+      if (savedName) {
+        teacherNameInput.value = savedName;
+      } else {
+        teacherNameInput.value = "Jane Doe"; // default name
+      }
+
+      // Load photo
+      const savedPhoto = localStorage.getItem(STORAGE_KEYS.photo);
+      if (savedPhoto) {
+        profilePicture.src = savedPhoto;
+      } else {
+        profilePicture.src = "https://randomuser.me/api/portraits/women/44.jpg"; // default photo
+      }
+
+      // Load or generate unique code
+      let uniqueCode = localStorage.getItem(STORAGE_KEYS.code);
+      if (!uniqueCode) {
+        uniqueCode = generateUniqueCode();
+        localStorage.setItem(STORAGE_KEYS.code, uniqueCode);
+      }
+      loginCodeEl.textContent = uniqueCode;
+    }
+
+    // Save profile data to localStorage
+    function saveProfile() {
+      localStorage.setItem(STORAGE_KEYS.name, teacherNameInput.value);
+      // photo is saved on upload event
+    }
+
+    // Handle profile picture change with size check and save to localStorage
+    uploadInput.addEventListener("change", (event) => {
+      errorMessage.style.display = "none";
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        errorMessage.textContent = "Please select a valid image file.";
+        errorMessage.style.display = "block";
+        uploadInput.value = "";
+        return;
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        errorMessage.textContent = "Image size must be 200 KB or less. Please choose a smaller file.";
+        errorMessage.style.display = "block";
+        uploadInput.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        profilePicture.src = e.target.result;
+        // Save photo data URL to localStorage
+        localStorage.setItem(STORAGE_KEYS.photo, e.target.result);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Form submission handler
+    profileForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      errorMessage.style.display = "none";
+
+      if (!profileForm.checkValidity()) {
+        errorMessage.textContent = "Please enter a valid name.";
+        errorMessage.style.display = "block";
+        return;
+      }
+
+      saveProfile();
+      alert("Profile changes saved successfully!");
+    });
+
+    // Initialize on page load
+    window.addEventListener("DOMContentLoaded", loadProfile);
+  </script>
+</body>
+</html>
