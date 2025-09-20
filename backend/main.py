@@ -65,6 +65,11 @@ async def teacher_page():
     html_path = BASE_DIR / "src" / "pages" / "teacher.html"
     return html_path.read_text(encoding="utf-8")
 
+@app.get("/teacherprofile", response_class=HTMLResponse)
+async def teacher_page():
+    html_path = BASE_DIR / "src" / "pages" / "teacherprofile.html"
+    return html_path.read_text(encoding="utf-8")
+
 @app.get("/quiz10English", response_class=HTMLResponse)
 async def teacher_page():
     html_path = BASE_DIR / "src" / "pages" / "quiz10English.html"
