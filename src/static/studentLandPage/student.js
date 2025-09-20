@@ -156,7 +156,7 @@ const chapterOptionsData = {
         "All Things Bright & Beautiful": {
           "Study Resources": ["https://example.com/study/bright"],
           "Notes": "https://example.com/notes/bright",
-          "Quizzes": "https://example.com/quizzes/bright",
+          "Quizzes": "../../src/pages/quiz10English.html",
           "Games": "https://example.com/games/bright"
         },
         "A Letter to God": {
