@@ -188,11 +188,11 @@ function submitQuiz() {
   localStorage.setItem('quizTimeTaken', timeTaken);
   localStorage.setItem('quizLevel', level);
 
-  window.location.href = 'quiz10EnglishResult.html';
+  window.location.href = 'quiz10EnglishResult';
 }
 
 function retryQuiz() {
-  window.location.href = 'quiz10English.html';
+  window.location.href = 'quiz10English';
 }
 
 function resetQuiz() {

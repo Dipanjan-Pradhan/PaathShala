@@ -32,5 +32,5 @@ function displayResults() {
 }
 
 function retryQuiz() {
-  window.location.href = 'quiz10English.html';
+  window.location.href = 'quiz10English';
 }

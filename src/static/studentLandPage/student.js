@@ -156,7 +156,7 @@ const chapterOptionsData = {
         "All Things Bright & Beautiful": {
           "Study Resources": ["https://example.com/study/bright"],
           "Notes": "https://example.com/notes/bright",
-          "Quizzes": "../../src/pages/quiz10English.html",
+          "Quizzes": "/quiz10English",
           "Games": "https://example.com/games/bright"
         },
         "A Letter to God": {
@@ -305,7 +305,7 @@ classCards.forEach(card => {
 
 profileButton.addEventListener("click", () => {
   // window.location.href = "/studentProfilePage/profile";
-  window.location.href = "../pages/profile.html";
+  window.location.href = "/profile";
   window.location.href = "/profile";
 });
 
