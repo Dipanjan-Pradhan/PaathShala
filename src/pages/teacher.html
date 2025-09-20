@@ -6,19 +6,284 @@
     <title>Teacher Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/teacherLandPage/teacher.css" />
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --card-hover: #4895ef;
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        .header-profile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+        .header-profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* PaathShala logo container bottom left */
+        .paathshala-container {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .paathshala-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        .paathshala-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            user-select: none;
+        }
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .class-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            animation: slideUp 0.5s ease;
+            animation-fill-mode: both;
+        }
+        .class-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .class-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; 
+            padding: 20px; 
+            text-align: center;
+        }
+        .class-card-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .class-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .class-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .student-count {
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .students-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .students-container.active {
+            max-height: 1000px;
+        }
+        .students-header {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 20px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .students-title {
+            font-size: 1.5rem;
+        }
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+        .students-list {
+            padding: 30px;
+        }
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .student-table th, .student-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .student-table th {
+            background-color: var(--light);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        .student-table tr:hover {
+            background-color: #f8f9ff;
+        }
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .student-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .student-id {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--secondary);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .class-card:nth-child(1) { animation-delay: 0.1s; }
+        .class-card:nth-child(2) { animation-delay: 0.2s; }
+        .class-card:nth-child(3) { animation-delay: 0.3s; }
+        .class-card:nth-child(4) { animation-delay: 0.4s; }
+        .class-card:nth-child(5) { animation-delay: 0.5s; }
+        .class-card:nth-child(6) { animation-delay: 0.6s; }
+        .class-card:nth-child(7) { animation-delay: 0.7s; }
+        @media (max-width: 768px) {
+            .classes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .student-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .classes-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 10px;
+            }
+            header {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .students-list {
+                padding: 15px;
+            }
+            .student-table th, .student-table td {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-top-left">
-                <img src="../../assets/PaathShala.jpg" alt="PaathShala Logo" class="header-logo" />
-                <span class="header-logo-text">PaathShala</span>
-            </div>
             <h1>Teacher Dashboard</h1>
             <p class="subtitle">Manage your classes and students with ease</p>
             <div class="header-profile">
                 <img src="https://i.pravatar.cc/150?img=12" alt="Profile Picture" />
+            </div>
+            <div class="paathshala-container">
+                <img src="PaathShala.jpg" alt="PaathShala Logo" class="paathshala-logo" />
+                <div class="paathshala-text">PaathShala</div>
             </div>
         </header>
         <div class="classes-grid">
@@ -40,7 +305,51 @@
                     <span class="student-count">35 Students</span>
                 </div>
             </div>
-            <!-- Add more class cards as needed... -->
+            <div class="class-card" data-class="8">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 8</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-flask"></i></div>
+                    <span class="student-count">30 Students</span>
+                </div>
+            </div>
+            <div class="class-card" data-class="9">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 9</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-book"></i></div>
+                    <span class="student-count">38 Students</span>
+                </div>
+            </div>
+            <div class="class-card" data-class="10">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 10</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <span class="student-count">40 Students</span>
+                </div>
+            </div>
+            <div class="class-card" data-class="11">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 11</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-atom"></i></div>
+                    <span class="student-count">36 Students</span>
+                </div>
+            </div>
+            <div class="class-card" data-class="12">
+                <div class="class-card-header">
+                    <h2 class="class-card-title">Class 12</h2>
+                </div>
+                <div class="class-card-body">
+                    <div class="class-icon"><i class="fas fa-rocket"></i></div>
+                    <span class="student-count">42 Students</span>
+                </div>
+            </div>
         </div>
         <div class="students-container" id="studentsContainer">
             <div class="students-header">
@@ -64,7 +373,61 @@
             <p>Teacher Dashboard &copy; 2023. All rights reserved.</p>
         </footer>
     </div>
-
-    <script src="../static/teacherLandPage/teacher.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const classCards = document.querySelectorAll('.class-card');
+            const studentsContainer = document.getElementById('studentsContainer');
+            const studentsTableBody = document.getElementById('studentsTableBody');
+            const selectedClassSpan = document.getElementById('selectedClass');
+            const closeBtn = document.getElementById('closeStudents');
+            const studentsData = {
+                6: [
+                    { name: 'Emma Johnson', id: 'STU00601', mobile: '9876543210', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old girl with brown hair&id=stu6-1' },
+                    { name: 'Noah Williams', id: 'STU00602', mobile: '9876543211', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with black hair&id=stu6-2' },
+                    { name: 'Olivia Brown', id: 'STU00603', mobile: '9876543212', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with blonde hair&id=stu6-3' },
+                    { name: 'Liam Jones', id: 'STU00604', mobile: '9876543213', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with red hair&id=stu6-4' },
+                    { name: 'Ava Garcia', id: 'STU00605', mobile: '9876543214', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with curly hair&id=stu6-5' }
+                ],
+                7: [
+                    { name: 'William Miller', id: 'STU00701', mobile: '9876543220', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with glasses&id=stu7-1' },
+                    { name: 'Sophia Davis', id: 'STU00702', mobile: '9876543221', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with braided hair&id=stu7-2' },
+                    { name: 'Mason Rodriguez', id: 'STU00703', mobile: '9876543222', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with short hair&id=stu7-3' },
+                    { name: 'Isabella Martinez', id: 'STU00704', mobile: '9876543223', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with smiling face&id=stu7-4' },
+                    { name: 'James Hernandez', id: 'STU00705', mobile: '9876543224', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with freckles&id=stu7-5' }
+                ]
+                // Additional classes & students can be added here
+            };
+            classCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const classNumber = this.getAttribute('data-class');
+                    showStudents(classNumber);
+                });
+            });
+            closeBtn.addEventListener('click', function () {
+                studentsContainer.classList.remove('active');
+            });
+            function showStudents(classNumber) {
+                selectedClassSpan.textContent = classNumber;
+                studentsTableBody.innerHTML = '';
+                const students = studentsData[classNumber] || [];
+                students.forEach(student => {
+                    const studentRow = document.createElement('tr');
+                    studentRow.innerHTML = `
+                        <td>
+                            <div class="student-name">
+                                <img src="${student.avatar}" alt="Portrait of ${student.name}" class="student-avatar" />
+                                ${student.name}
+                            </div>
+                        </td>
+                        <td><span class="student-id">${student.id}</span></td>
+                        <td>${student.mobile}</td>
+                    `;
+                    studentsTableBody.appendChild(studentRow);
+                });
+                studentsContainer.classList.add('active');
+                studentsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
 </body>
 </html>
