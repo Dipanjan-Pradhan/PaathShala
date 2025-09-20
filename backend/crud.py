@@ -1,24 +1,24 @@
 from sqlalchemy.orm import Session
 from models import Teacher, Student
 from auth import hash_password
+import models
 import secrets
 
 # ---------------------------
 # TEACHER CRUD
 # ---------------------------
-def create_teacher(db: Session, teacher_data):
-    code = secrets.token_hex(4)  # 8-character unique code
-    hashed_pw = hash_password(teacher_data.password)
-    teacher = Teacher(
-        name=teacher_data.name,
-        email=teacher_data.email,
-        hashed_password=hashed_pw,
-        code=code
+def create_teacher(db: Session, name: str, email: str, hashed_password: str):
+    import uuid
+    db_teacher = models.Teacher(
+        name=name,
+        email=email,
+        hashed_password=hashed_password,
+        code=str(uuid.uuid4())[:8]  # generate unique code
     )
-    db.add(teacher)
+    db.add(db_teacher)
     db.commit()
-    db.refresh(teacher)
-    return teacher
+    db.refresh(db_teacher)
+    return db_teacher
 
 
 def get_teacher_by_email(db: Session, email: str):

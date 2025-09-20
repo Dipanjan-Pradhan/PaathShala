@@ -173,7 +173,7 @@ async function handleTeacherSignin() {
         email: data.email,
         code: data.code
     }));
-    window.location.href = '/profile';
+    window.location.href = '/teacher';
   } catch (err) {
     alert(err.message);
   }

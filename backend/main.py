@@ -133,17 +133,29 @@ def login(credentials: schemas.StudentLogin, db: Session = Depends(get_db)):
 def teacher_signup(teacher: schemas.TeacherCreate, db: Session = Depends(get_db)):
     if teacher.password != teacher.confirm_password:
         return JSONResponse({"success": False, "detail": "Passwords do not match"}, status_code=400)
+    
     if crud.get_teacher_by_email(db, teacher.email):
         return JSONResponse({"success": False, "detail": "Email already registered"}, status_code=400)
 
     # hash password
-    teacher.password = hash_password(teacher.password)
-    teacher.confirm_password = teacher.password
+    hashed_pw = hash_password(teacher.password)
 
-    db_teacher = crud.create_teacher(db, teacher)
-    return JSONResponse(
-        {"success": True, "redirect": "/profile", "code": db_teacher.code}
+    # create teacher in DB
+    db_teacher = crud.create_teacher(
+        db,
+        name=teacher.name.strip(),
+        email=teacher.email.strip(),
+        hashed_password=hashed_pw
     )
+
+    return JSONResponse({
+        "success": True,
+        "redirect": "/profile",
+        "access_token": "dummy_token",
+        "code": db_teacher.code,
+        "name": db_teacher.name,
+        "email": db_teacher.email
+    })
 
 @app.post("/teacher/login")
 def teacher_login(credentials: schemas.TeacherLogin, db: Session = Depends(get_db)):
@@ -154,13 +166,15 @@ def teacher_login(credentials: schemas.TeacherLogin, db: Session = Depends(get_d
         return JSONResponse({"success": False, "detail": "Incorrect password"}, status_code=400)
 
     return JSONResponse(
-        {
-            "success": True,
-            "redirect": "/profile",
-            "access_token": "dummy_token",
-            "code": db_teacher.code,
-        }
-    )
+    {
+        "success": True,
+        "redirect": "/profile",
+        "access_token": "dummy_token",
+        "code": db_teacher.code,
+        "name": db_teacher.name,
+        "email": db_teacher.email
+    }
+)
 
 # -------------------
 # RELATIONSHIP APIs

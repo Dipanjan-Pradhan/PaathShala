@@ -5,12 +5,12 @@ from typing import Optional, List
 
 class TeacherCreate(BaseModel):
     name: str
-    email: EmailStr
+    email: Optional[str]
     password: str
     confirm_password: str
 
 class TeacherLogin(BaseModel):
-    email: EmailStr
+    email: Optional[str]
     password: str
 
 class TeacherOut(BaseModel):
