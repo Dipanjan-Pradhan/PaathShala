@@ -1,153 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Teacher Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="../static/teacherLandPage/teacher.css" />
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Teacher Dashboard</h1>
-            <p class="subtitle">Manage your classes and students with ease</p>
-            <div class="header-profile">
-                <img src="https://i.pravatar.cc/150?img=12" alt="Profile Picture" />
-            </div>
-            <div class="paathshala-container">
-                <img src="../../assets/PaathShala.jpg" alt="PaathShala Logo" class="paathshala-logo" />
-                <div class="paathshala-text">PaathShala</div>
-            </div>
-        </header>
-        <div class="classes-grid">
-            <div class="class-card" data-class="6">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 6</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-pencil-alt"></i></div>
-                    <span class="student-count">32 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="7">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 7</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-calculator"></i></div>
-                    <span class="student-count">35 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="8">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 8</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-flask"></i></div>
-                    <span class="student-count">30 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="9">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 9</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-book"></i></div>
-                    <span class="student-count">38 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="10">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 10</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <span class="student-count">40 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="11">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 11</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-atom"></i></div>
-                    <span class="student-count">36 Students</span>
-                </div>
-            </div>
-            <div class="class-card" data-class="12">
-                <div class="class-card-header">
-                    <h2 class="class-card-title">Class 12</h2>
-                </div>
-                <div class="class-card-body">
-                    <div class="class-icon"><i class="fas fa-rocket"></i></div>
-                    <span class="student-count">42 Students</span>
-                </div>
-            </div>
+      <header>
+        <h1>Teacher Dashboard</h1>
+        <p class="subtitle">Manage your classes and students with ease</p>
+        <div class="header-profile">
+          <img src="https://i.pravatar.cc/150?img=12" alt="Profile Picture" />
         </div>
-        <div class="students-container" id="studentsContainer">
-            <div class="students-header">
-                <h3 class="students-title">Students in Class <span id="selectedClass">6</span></h3>
-                <button class="close-btn" id="closeStudents"><i class="fas fa-times"></i></button>
+        <div class="paathshala-container">
+            <div>
+                <img
+                  src="/assets/img/PaathShala.jpg"
+                  alt="PaathShala Logo"
+                  class="paathshala-logo"
+                />
             </div>
-            <div class="students-list" id="studentsList">
-                <table class="student-table">
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>ID</th>
-                            <th>Mobile Number</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentsTableBody"></tbody>
-                </table>
-            </div>
+          <div class="paathshala-text">PaathShala</div>
         </div>
-        <footer>
-            <p>Teacher Dashboard &copy; 2023. All rights reserved.</p>
-        </footer>
+      </header>
+      <div class="classes-grid">
+        <div class="class-card" data-class="6">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 6</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-pencil-alt"></i></div>
+            <span class="student-count">32 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="7">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 7</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-calculator"></i></div>
+            <span class="student-count">35 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="8">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 8</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-flask"></i></div>
+            <span class="student-count">30 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="9">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 9</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-book"></i></div>
+            <span class="student-count">38 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="10">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 10</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-graduation-cap"></i></div>
+            <span class="student-count">40 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="11">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 11</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-atom"></i></div>
+            <span class="student-count">36 Students</span>
+          </div>
+        </div>
+        <div class="class-card" data-class="12">
+          <div class="class-card-header">
+            <h2 class="class-card-title">Class 12</h2>
+          </div>
+          <div class="class-card-body">
+            <div class="class-icon"><i class="fas fa-rocket"></i></div>
+            <span class="student-count">42 Students</span>
+          </div>
+        </div>
+      </div>
+      <div class="students-container" id="studentsContainer">
+        <div class="students-header">
+          <h3 class="students-title">
+            Students in Class <span id="selectedClass">6</span>
+          </h3>
+          <button class="close-btn" id="closeStudents">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="students-list" id="studentsList">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>ID</th>
+                <th>Mobile Number</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <footer>
+        <p>Teacher Dashboard &copy; 2023. All rights reserved.</p>
+      </footer>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const classCards = document.querySelectorAll('.class-card');
-            const studentsContainer = document.getElementById('studentsContainer');
-            const studentsTableBody = document.getElementById('studentsTableBody');
-            const selectedClassSpan = document.getElementById('selectedClass');
-            const closeBtn = document.getElementById('closeStudents');
-            const studentsData = {
-                6: [
-                    { name: 'Emma Johnson', id: 'STU00601', mobile: '9876543210', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old girl with brown hair&id=stu6-1' },
-                    { name: 'Noah Williams', id: 'STU00602', mobile: '9876543211', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with black hair&id=stu6-2' },
-                    { name: 'Olivia Brown', id: 'STU00603', mobile: '9876543212', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with blonde hair&id=stu6-3' },
-                    { name: 'Liam Jones', id: 'STU00604', mobile: '9876543213', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with red hair&id=stu6-4' },
-                    { name: 'Ava Garcia', id: 'STU00605', mobile: '9876543214', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with curly hair&id=stu6-5' }
-                ],
-                7: [
-                    { name: 'William Miller', id: 'STU00701', mobile: '9876543220', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with glasses&id=stu7-1' },
-                    { name: 'Sophia Davis', id: 'STU00702', mobile: '9876543221', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with braided hair&id=stu7-2' },
-                    { name: 'Mason Rodriguez', id: 'STU00703', mobile: '9876543222', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with short hair&id=stu7-3' },
-                    { name: 'Isabella Martinez', id: 'STU00704', mobile: '9876543223', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with smiling face&id=stu7-4' },
-                    { name: 'James Hernandez', id: 'STU00705', mobile: '9876543224', avatar: 'https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with freckles&id=stu7-5' }
-                ]
-                // Additional classes & students can be added here
-            };
-            classCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    const classNumber = this.getAttribute('data-class');
-                    showStudents(classNumber);
-                });
-            });
-            closeBtn.addEventListener('click', function () {
-                studentsContainer.classList.remove('active');
-            });
-            function showStudents(classNumber) {
-                selectedClassSpan.textContent = classNumber;
-                studentsTableBody.innerHTML = '';
-                const students = studentsData[classNumber] || [];
-                students.forEach(student => {
-                    const studentRow = document.createElement('tr');
-                    studentRow.innerHTML = `
+      document.addEventListener("DOMContentLoaded", function () {
+        const classCards = document.querySelectorAll(".class-card");
+        const studentsContainer = document.getElementById("studentsContainer");
+        const studentsTableBody = document.getElementById("studentsTableBody");
+        const selectedClassSpan = document.getElementById("selectedClass");
+        const closeBtn = document.getElementById("closeStudents");
+        const studentsData = {
+          6: [
+            {
+              name: "Emma Johnson",
+              id: "STU00601",
+              mobile: "9876543210",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old girl with brown hair&id=stu6-1",
+            },
+            {
+              name: "Noah Williams",
+              id: "STU00602",
+              mobile: "9876543211",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with black hair&id=stu6-2",
+            },
+            {
+              name: "Olivia Brown",
+              id: "STU00603",
+              mobile: "9876543212",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with blonde hair&id=stu6-3",
+            },
+            {
+              name: "Liam Jones",
+              id: "STU00604",
+              mobile: "9876543213",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 11 year old boy with red hair&id=stu6-4",
+            },
+            {
+              name: "Ava Garcia",
+              id: "STU00605",
+              mobile: "9876543214",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with curly hair&id=stu6-5",
+            },
+          ],
+          7: [
+            {
+              name: "William Miller",
+              id: "STU00701",
+              mobile: "9876543220",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with glasses&id=stu7-1",
+            },
+            {
+              name: "Sophia Davis",
+              id: "STU00702",
+              mobile: "9876543221",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with braided hair&id=stu7-2",
+            },
+            {
+              name: "Mason Rodriguez",
+              id: "STU00703",
+              mobile: "9876543222",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with short hair&id=stu7-3",
+            },
+            {
+              name: "Isabella Martinez",
+              id: "STU00704",
+              mobile: "9876543223",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 12 year old girl with smiling face&id=stu7-4",
+            },
+            {
+              name: "James Hernandez",
+              id: "STU00705",
+              mobile: "9876543224",
+              avatar:
+                "https://placeholder-image-service.onrender.com/image/40x40?prompt=Portrait of a 13 year old boy with freckles&id=stu7-5",
+            },
+          ],
+          // Additional classes & students can be added here
+        };
+        classCards.forEach((card) => {
+          card.addEventListener("click", function () {
+            const classNumber = this.getAttribute("data-class");
+            showStudents(classNumber);
+          });
+        });
+        closeBtn.addEventListener("click", function () {
+          studentsContainer.classList.remove("active");
+        });
+        function showStudents(classNumber) {
+          selectedClassSpan.textContent = classNumber;
+          studentsTableBody.innerHTML = "";
+          const students = studentsData[classNumber] || [];
+          students.forEach((student) => {
+            const studentRow = document.createElement("tr");
+            studentRow.innerHTML = `
                         <td>
                             <div class="student-name">
                                 <img src="${student.avatar}" alt="Portrait of ${student.name}" class="student-avatar" />
@@ -157,12 +237,12 @@
                         <td><span class="student-id">${student.id}</span></td>
                         <td>${student.mobile}</td>
                     `;
-                    studentsTableBody.appendChild(studentRow);
-                });
-                studentsContainer.classList.add('active');
-                studentsContainer.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+            studentsTableBody.appendChild(studentRow);
+          });
+          studentsContainer.classList.add("active");
+          studentsContainer.scrollIntoView({ behavior: "smooth" });
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

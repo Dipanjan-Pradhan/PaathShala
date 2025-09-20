@@ -86,6 +86,30 @@ h1 {
     object-fit: cover;
     display: block;
 }
+
+.paathshala-container {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+}
+
+.paathshala-logo {
+    height: 40px;
+    width: auto;
+    border-radius: 4px;
+    display: block;
+}
+
+.paathshala-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
+    user-select: none;
+}
 .classes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
