@@ -88,9 +88,16 @@ def signup(student: schemas.StudentCreate, db: Session = Depends(get_db)):
         return JSONResponse({"success": False, "detail": "Email already registered"}, status_code=400)
 
     # hash the password before saving
-    crud.create_student(db, student)
-
-    return JSONResponse({"success": True, "redirect": "/student"})
+    student_db = crud.create_student(db, student)
+    return JSONResponse({
+        "success": True,
+        "redirect": "/student",
+        "access_token": "dummy_token",
+        "id": student_db.id,
+        "name": student_db.name,
+        "mobile": student_db.mobile,
+        "email": student_db.email
+    })
 
 @app.post("/student/login")
 def login(credentials: schemas.StudentLogin, db: Session = Depends(get_db)):
@@ -104,9 +111,15 @@ def login(credentials: schemas.StudentLogin, db: Session = Depends(get_db)):
     if not verify_password(credentials.password, db_student.hashed_password):
         return JSONResponse({"success": False, "detail": "Incorrect password"}, status_code=400)
 
-    return JSONResponse(
-        {"success": True, "redirect": "/student", "access_token": "dummy_token"}
-    )
+    return JSONResponse({
+        "success": True,
+        "redirect": "/student",
+        "access_token": "dummy_token",
+        "id": db_student.id,
+        "name": db_student.name,
+        "mobile": db_student.mobile,
+        "email": db_student.email
+})
 
 # -------------------
 # TEACHER AUTH APIs
