@@ -14,24 +14,35 @@ async function loadProfile() {
         const token = localStorage.getItem("PaathShala-token");
         if (!token) throw new Error("Please login first");
 
-        const email = localStorage.getItem("teacherEmail"); // Assume stored on login
+        const loginData = JSON.parse(localStorage.getItem("teacherLoginData") || "{}");
+        const email = loginData.email;
+        const code = loginData.code;
+        const mobile = loginData.mobile; // added mobile
         if (!email) throw new Error("Email not found, please login again");
 
-        const res = await fetch(`${API_BASE_URL}/teacherprofile?email=${encodeURIComponent(email)}`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
+        const res = await fetch(`${API_BASE_URL}/teacherprofile/data?email=${encodeURIComponent(email)}`, {
+          method: "GET",
+          headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+          }
         });
 
         if (!res.ok) throw new Error("Failed to load profile data");
 
         const data = await res.json();
 
-        teacherNameInput.value = data.name || "Jane Doe";
-        profilePicture.src = data.profile_picture || "https://randomuser.me/api/portraits/women/44.jpg";
-        loginCodeEl.textContent = data.code || generateUniqueCode();
+        teacherNameInput.value = data.name || loginData.name || "Jane Doe";
+        profilePicture.src = data.profile_picture || "";
+        loginCodeEl.textContent = data.code || loginData.code || generateUniqueCode();
+
+        // Update phone and email in the DOM
+        const phoneSpan = document.querySelector('.profile-info span');
+        const emailLink = document.querySelector('.profile-info a');
+
+        phoneSpan.textContent = mobile || "Not provided";
+        emailLink.textContent = email || "Not provided";
+        emailLink.href = email ? `mailto:${email}` : "#";
 
     } catch (err) {
         console.error(err);
@@ -39,11 +50,13 @@ async function loadProfile() {
     }
 }
 
+
 // Save teacher profile to backend
 async function saveProfile() {
     try {
         const token = localStorage.getItem("PaathShala-token");
-        const email = localStorage.getItem("teacherEmail");
+        const loginData = JSON.parse(localStorage.getItem("teacherLoginData") || "{}");
+        const email = loginData.email;
         if (!email) throw new Error("Email not found");
 
         const res = await fetch(`${API_BASE_URL}/teacherprofile`, {
@@ -94,7 +107,9 @@ uploadInput.addEventListener("change", async (event) => {
 
     try {
         const token = localStorage.getItem("PaathShala-token");
-        const email = localStorage.getItem("teacherEmail");
+        const loginData = JSON.parse(localStorage.getItem("teacherLoginData") || "{}");
+        const email = loginData.email;
+        const code = loginData.code;
 
         const formData = new FormData();
         formData.append("profile_picture", file);

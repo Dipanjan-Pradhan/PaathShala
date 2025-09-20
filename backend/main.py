@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, File, UploadFile
 from fastapi.responses import JSONResponse, FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
@@ -286,6 +286,65 @@ def change_student_password(password_data: dict, db: Session = Depends(get_db)):
     crud.update_password(db, mobile, hash_password(new_password))
 
     return {"success": True, "detail": "Password changed successfully"}
+
+
+# -------------------
+# TEACHER PROFILE APIs
+# -------------------
+@app.get("/teacherprofile/data")
+def get_teacher_profile(email: str, db: Session = Depends(get_db)):
+    db_teacher = crud.get_teacher_by_email(db, email)
+    if not db_teacher:
+        return JSONResponse({"success": False, "detail": "Email not found, please login again"}, status_code=404)
+    
+    return {
+        "success": True,
+        "code": db_teacher.code,
+        "name": db_teacher.name,
+        "email": db_teacher.email,
+        "profile_picture": getattr(db_teacher, "profile_picture", None)
+    }
+
+@app.put("/teacherprofile")
+def update_teacher_profile(profile_data: dict, db: Session = Depends(get_db)):
+    email = profile_data.get("email")
+    name = profile_data.get("name")
+    if not email or not name:
+        return JSONResponse({"success": False, "detail": "Email and name required"}, status_code=400)
+
+    db_teacher = crud.get_teacher_by_email(db, email)
+    if not db_teacher:
+        return JSONResponse({"success": False, "detail": "Teacher not found"}, status_code=404)
+    
+    db_teacher.name = name.strip()
+    db.commit()
+    db.refresh(db_teacher)
+    
+    return {
+        "success": True,
+        "code": db_teacher.code,
+        "name": db_teacher.name,
+        "email": db_teacher.email
+    }
+
+@app.post("/teacher/upload-picture")
+def upload_teacher_picture(email: str, file: UploadFile = File(...), db: Session = Depends(get_db)):
+    db_teacher = crud.get_teacher_by_email(db, email)
+    if not db_teacher:
+        return JSONResponse({"success": False, "detail": "Teacher not found"}, status_code=404)
+    
+    # Save file
+    ext = os.path.splitext(file.filename)[1]
+    file_path = PROFILE_PIC_DIR / f"{db_teacher.code}{ext}"
+    with open(file_path, "wb") as f:
+        f.write(file.file.read())
+    
+    db_teacher.profile_picture = f"/assets/profile_pictures/{db_teacher.code}{ext}"
+    db.commit()
+    db.refresh(db_teacher)
+    
+    return {"success": True, "image_url": db_teacher.profile_picture}
+
 
 # -------------------
 # START SERVER

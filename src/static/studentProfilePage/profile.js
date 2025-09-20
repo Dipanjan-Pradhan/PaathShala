@@ -61,7 +61,7 @@ function populateTeacherFields(data) {
     teacherNameInput.value = data.name || '';
     displayName.textContent = data.name || 'N/A';
     displayEmail.textContent = data.email || 'N/A';
-    profileImage.src = data.profile_picture || 'https://randomuser.me/api/portraits/women/44.jpg';
+    profileImage.src = data.profile_picture || '';
     teacherCodeEl.textContent = data.code || '';
 }
 
