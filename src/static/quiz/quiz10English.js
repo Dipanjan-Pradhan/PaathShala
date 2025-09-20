@@ -110,6 +110,12 @@ document.getElementById('submitQuizBtn').addEventListener('click', submitQuiz);
 document.getElementById('retryBtn').addEventListener('click', retryQuiz);
 document.getElementById('resetBtn').addEventListener('click', resetQuiz);
 
+// Prevent form submission
+document.getElementById('quizForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  submitQuiz();
+});
+
 function startQuiz() {
   selectedTime = parseInt(document.getElementById('timerSelect').value);
   timeLeft = selectedTime;
